@@ -1,0 +1,61 @@
+.toast{
+    position:fixed;
+    list-style:none;
+    padding:2%;
+    text-align: center;
+    margin:0;
+    top:0;
+    z-index:999999;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size:14px;
+    line-height:20px}
+.toast li{
+    margin:10px 0 0 0;
+    display:block;
+    color:white;
+    background-color:rgba(0,0,0,0.8);
+    border:1px solid #fbeed5;
+    padding:2%;
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    width:98%;
+    height:98%;
+    /*text-shadow:3px 2px 7px rgba(0, 0, 0, 1);*/
+    /*box-shadow:0 2px 5px black;*/
+    /*-webkit-box-shadow:0 2px 5px rgba(0,0,0,.15)*/
+}
+.toast li:first-child{
+    margin-top:0
+}
+.toast li.danger{
+    color:red;
+    // background-color:#f2dede;
+    background-color: rgba(242, 222, 222, 0.9);
+    border-color:#eed3d7
+}.toast li.info{
+    color: #0073ea;
+    //background-color:black;
+    background-color:rgba(188, 232, 241, 0.9);
+    /*border-color:#bce8f1*/
+}
+.toast li.success{
+    color:green;
+    //background-color:#dff0d8;
+    background-color: rgba(223, 240, 216, 0.9);
+    border-color:#d6e9c6
+}
+.toast button.close{
+    background:none;
+    border:none;
+    font-weight:bold;
+    font-size:20px;
+    line-height:20px;
+    float:right;
+    padding:0;
+    margin:0 0 0 5px;
+    color:#fff;  
+    cursor:pointer
+} 
+.toast h1,.toast h2,.toast h3,.toast h4{
+    display:inline
+}

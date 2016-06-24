@@ -1,0 +1,24 @@
+{% block captcha_widget %}
+    {% spaceless %}
+       
+            <span class="input-group-addon">
+                <img id="{{ image_id }}" src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}" />
+            </span>
+            <input type="text" placeholder="Captcha" class="form-control" style='height:48px ' name="user[captcha]" id="user_captcha">
+            {% if reload %}   
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-refresh" title="Renew Captcha"  onclick="javascript:reload_{{ image_id }}(this);" style="cursor: pointer;"></span>
+                </span>
+            {% endif %}
+     
+    {% endspaceless %}
+    <script type="text/javascript">
+        function reload_{{ image_id }}(obj) {
+            console.log(obj);
+            var img = document.getElementById('{{ image_id }}');
+            obj.className += " glyphicon-spin";
+            img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
+            obj.setAttribute("class", "glyphicon glyphicon-refresh");
+        }
+    </script>
+{% endblock %}

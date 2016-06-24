@@ -1,0 +1,24 @@
+
+<html>
+    <body>
+        
+   
+
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <span id="LoggedUserName" >User <strong>{{app.user.username}}</strong> Working as </span> <span id="WorkSpaceName" style="font-weight: bolder;" ></span>
+
+    <span id="worksAs" class="nameBox" >
+        Change User
+    </span> 
+   
+    <a href="{{ path('change_user_password') }}">Change password</a>
+   
+    <a href="{{ path('_logout') }}" class="nameBox" title="Logout">
+
+        {{'layout.logout'|trans({}, 'FOSUserBundle') }}
+    </a>
+{% else %}
+    <a href="{{ path('login') }}" class="lnkLog">{{'layout.login'|trans({}, 'FOSUserBundle') }}</a> 
+{% endif %}
+     </body>
+</html>

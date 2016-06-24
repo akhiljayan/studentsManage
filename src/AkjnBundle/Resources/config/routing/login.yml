@@ -1,0 +1,63 @@
+#login:
+#    path:  /login
+#    defaults: { _controller: "AkjnBundle:Login:login" }
+login:
+    path:  /
+    defaults: { _controller: "AkjnBundle:Login:login" }
+    
+akjn_secured_login_expired:
+    path:  /login/expired
+    defaults: { _controller: "AkjnBundle:Login:expired" }
+    
+#login_authorisation:
+#    path:  /
+#    defaults: { _controller: "AkjnBundle:Authorisation:index" }
+#    
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /security
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /registration
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
+    
+change_user_password:
+    path:  /change-password
+    defaults: { _controller: "AkjnBundle:User:showChangePasswordForm" }
+    
+user_passwordchange_check:
+    path:  /change-password-check
+    defaults: { _controller: "AkjnBundle:User:changePassword" }
+      
+user_passwordchangeview:
+    path:  /view/changepassword
+    defaults: { _controller: "AkjnBundle:Password:passwordchangeview" }
+    
+slbundle_login_user_test:
+    path:  /login/check/{userName}
+    defaults: { _controller: "AkjnBundle:Login:preLogin" }
+    
+credentials_expired:
+    path:  /credentials_expired
+    defaults: { _controller: "AkjnBundle:User:showChangePasswordForm" }
+    
+add_failed_login_attempts:
+    path: /login/{username}
+    defaults: { _controller: "AkjnBundle:User:addFailedLoginAttempts" }
+    
+change_lock_status:
+    path: /lock_change/{username}
+    defaults: { _controller: "AkjnBundle:User:changeLockStatus" }
+    
+_logout:   
+    path: /prelogout
+    defaults: { _controller: "AkjnBundle:Logout:index" }
+    

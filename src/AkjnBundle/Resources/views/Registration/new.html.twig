@@ -1,0 +1,110 @@
+<div class="row">
+    <!-- left column -->
+    {% form_theme form with ['bootstrap_3_horizontal_layout.html.twig'] %}
+    <form name="{{form.vars.name}}" class="form-horizontal" role="form" action="{{form.vars.action}}" id="{{form.vars.id}}" method="{{form.vars.method}}">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">New User Registration</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    {{ form_row(form.displayName) }}
+                    {{ form_row(form.dob) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.mobileNumber) }}
+                    {{ form_row(form.password) }}
+                    {{ form_row(form.checkpassword) }}
+                    {{ form_row(form.securityQuestion) }}
+                    {{ form_row(form.securityAnswer) }}
+                    {{ form_row(form.captcha)}}
+                    {{ form_errors(form) }}
+                    <div class="box-footer">
+                        {{ form_widget(form.submit) }}{{ form_widget(form.reset) }}
+                        {{ form_end(form) }} 
+                    </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+    function  __loadRegistrationFormPostLoad()
+    {
+        $("img#error").hide();
+        var thisForm = $("#{{form.vars.name}}");
+        thisForm.applyMust();
+        thisForm.validate({
+            rules: {
+                '{{form.password.vars.full_name}}': "required",
+                '{{form.checkpassword.vars.full_name}}': {
+                    equalTo: "#{{form.password.vars.id}}"
+                }
+            }, messages: {
+                '{{form.password.vars.full_name}}': "Password venam",
+                '{{form.checkpassword.vars.full_name}}': {
+                    required: "Confirm Password Venam",
+                    equalTo: "Mismatch in first Password"
+                }
+            }
+        });
+        $("#{{form.email.vars.id}}").focusout(function () {
+            var path = "{{ path('email_availablility_check' , {'email':'__em__'}) }}";
+            var email = $(this).val();
+            path = path.replace('__em__', email);
+            if (IsEmail(email) === true) {
+                $.ajax({
+                    type: 'POST',
+                    url: path,
+                    success: function (result) {
+                        if (result.status === true) {
+                            $("img#error").show();
+                        } else {
+                            $("img#error").hide();
+                        }
+                    }
+                });
+            }
+            $("img#error").hide();
+        });
+        function IsEmail(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        $("#{{form.submit.vars.id}}").click(function () {
+            hashPasswords();
+            if (thisForm.valid()) {
+                var path = "{{ path('registration_new_save') }}";
+                $.ajax({
+                    type: 'POST',
+                    url: path,
+                    data: thisForm.serialize(),
+                    success: function (result) {
+                        __loadRegistrationFormCB(result);
+                    }
+                });
+                return true;
+            } else {
+                return false;
+            }
+        });
+    }
+    function hashPasswords() {
+        var pwd1 = $("#{{form.password.vars.id}}");
+        var pwd2 = $("#{{form.checkpassword.vars.id}}");
+        if (!(pwd1.val() === null || pwd2.val() === "")) {
+            var baS1 = sjcl.hash.sha256.hash(pwd1.val());
+            var digestS1 = sjcl.codec.hex.fromBits(baS1);
+            var baS2 = sjcl.hash.sha256.hash(pwd2.val());
+            var digestS2 = sjcl.codec.hex.fromBits(baS2);
+            pwd1.val(digestS1);
+            pwd2.val(digestS2);
+        }
+    }
+
+</script>

@@ -1,0 +1,20 @@
+admin:
+    resource: "@AdminBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+akjn_secured_login_registration:
+    resource: "@AkjnBundle/Resources/config/routing/registration.yml"
+    prefix:   /registration
+    
+akjn_secured_login:
+    resource: "@AkjnBundle/Resources/config/routing/login.yml"
+    prefix: /
+    
+akjn_secured_user_reset:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.yml"
+    prefix:   /resetting
+    
+
+#app:
+#    resource: "@AppBundle/Controller/"
+#    type:     annotation

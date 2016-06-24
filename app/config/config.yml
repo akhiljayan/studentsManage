@@ -1,0 +1,127 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@AdminBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+
+framework:
+    #esi:             ~
+    translator:      { fallbacks: en }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
+        handler_id:  session.handler.native_file
+        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver:
+        #   1. add the path in parameters.yml
+        #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
+        #   2. Uncomment database_path in parameters.yml.dist
+        #   3. Uncomment next line:
+        #     path:     "%database_path%"
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+    
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AkjnBundle\Entity\User
+
+
+
+akjn:
+    route_referer:
+        enabled: true
+        route_ignore_list:
+            - fos_user_security_login
+            - fos_user_security_check
+            - fos_user_security_logout
+            - fos_user_registration_register
+            - fos_user_registration_check_email
+            - fos_user_registration_confirm
+            - fos_user_registration_confirmed
+            - fos_user_resetting_request
+            - fos_user_resetting_send_email
+            - fos_user_resetting_check_email
+            - fos_user_resetting_reset
+            - fos_user_change_password
+    login_shield:
+        route_login:
+            name:                  fos_user_security_login
+            params:                []
+        force_account_recovery:    # Specify all routes to block after attempt limit is reached, and account recovery route to force browser redirect.
+            enabled:               true
+            after_attempts:        10
+            duration_in_minutes:   1
+            route_recover_account:
+                name:              fos_user_resetting_request
+                params:            []
+            routes:
+                - fos_user_security_login
+                - fos_user_security_check
+                - fos_user_security_logout
+        block_pages:               # Specify all routes to block after attempt limit is reached.
+            enabled:               true
+            after_attempts:        10
+            duration_in_minutes:   2
+            routes:
+                - fos_user_security_login
+                - fos_user_security_check
+                - fos_user_security_logout
+                - fos_user_registration_register
+                - fos_user_registration_check_email
+                - fos_user_registration_confirm
+                - fos_user_registration_confirmed
+                - fos_user_resetting_request
+                - fos_user_resetting_send_email
+
+tui_session:
+    session_timeout: 99999
+    redirect_to: akjn_expired

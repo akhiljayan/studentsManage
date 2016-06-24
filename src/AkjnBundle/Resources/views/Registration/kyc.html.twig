@@ -1,0 +1,157 @@
+{% block stylesheets %}
+
+<link rel="stylesheet" href="{{ asset('bundles/nicsecuredlogin/css/styles.css') }}" type="text/css" media="all" />
+{% endblock %}
+<div id="registration">
+    <h4>Personal Details</h4>
+    <form name="{{form.vars.name}}" class="registration" action="{{form.vars.action}}" id="{{form.vars.id}}" method="{{form.vars.method}}">
+
+        <span>{{ form_label(form.uid)}}                    </span>   {{ form_widget(form.uid) }}                    {{ form_errors(form.uid) }}
+        <span>{{ form_label(form.eid)}}                    </span>   {{ form_widget(form.eid) }}                    {{ form_errors(form.eid) }}
+        <span>{{ form_label(form.displayName)}}            </span>   {{ form_widget(form.displayName) }}            {{ form_errors(form.displayName) }}
+        <span>{{ form_label(form.displayNameVernacular)}}  </span>   {{ form_widget(form.displayNameVernacular) }}  {{ form_errors(form.displayNameVernacular) }}       
+        <span>{{ form_label(form.gender)}}                 </span>   {{ form_widget(form.gender) }}                 {{ form_errors(form.gender) }}
+        <span>{{ form_label(form.fatherName)}}             </span>   {{ form_widget(form.fatherName) }}             {{ form_errors(form.fatherName) }}
+        <span>{{ form_label(form.motherName)}}             </span>   {{ form_widget(form.motherName) }}             {{ form_errors(form.motherName) }}
+        <span>{{ form_label(form.spouseName)}}             </span>   {{ form_widget(form.spouseName) }}             {{ form_errors(form.spouseName) }}
+        <span>{{ form_label(form.guardianName)}}           </span>   {{ form_widget(form.guardianName) }}           {{ form_errors(form.guardianName) }}
+        <span>{{ form_label(form.dob)}}                    </span>   {{ form_widget(form.dob) }}                    {{ form_errors(form.dob) }}
+        <span>{{ form_label(form.password)}}               </span>   {{ form_widget(form.password) }}               {{ form_errors(form.password) }}
+        <span>{{ form_label(form.checkpassword)}}          </span>   {{ form_widget(form.checkpassword) }}          {{ form_errors(form.checkpassword) }}
+        <span>{{ form_label(form.securityQuestion)}}       </span>   {{ form_widget(form.securityQuestion) }}       {{ form_errors(form.securityQuestion) }}
+        <span>{{ form_label(form.securityAnswer)}}         </span>   {{ form_widget(form.securityAnswer) }}         {{ form_errors(form.securityAnswer) }}
+
+        <h4>Address Details</h4>
+
+        <span>{{ form_label(form.address1)}}               </span>   {{ form_widget(form.address1) }}               {{ form_errors(form.address1) }}
+        <span>{{ form_label(form.address2)}}               </span>   {{ form_widget(form.address2) }}               {{ form_errors(form.address2) }}
+        <span>{{ form_label(form.address3)}}               </span>   {{ form_widget(form.address3) }}               {{ form_errors(form.address3) }}
+        <span>{{ form_label(form.address4)}}               </span>   {{ form_widget(form.address4) }}               {{ form_errors(form.address4) }}
+        <span>{{ form_label(form.villageCode)}}            </span>   {{ form_widget(form.villageCode) }}            {{ form_errors(form.villageCode) }}
+        <span>{{ form_label(form.subDistrict)}}            </span>   {{ form_widget(form.subDistrict) }}            {{ form_errors(form.subDistrict) }}
+        <span>{{ form_label(form.district)}}               </span>   {{ form_widget(form.district) }}               {{ form_errors(form.district) }}
+        <span>{{ form_label(form.state)}}                  </span>   {{ form_widget(form.state) }}                  {{ form_errors(form.state) }}
+        <span>{{ form_label(form.pinCode)}}                </span>   {{ form_widget(form.pinCode) }}                {{ form_errors(form.pinCode) }}
+
+        <h4>Contact Details</h4>
+
+        <span>{{ form_label(form.mobileNumber)}}           </span>   {{ form_widget(form.mobileNumber) }}           {{ form_errors(form.mobileNumber) }}
+        <span>{{ form_label(form.email)}}                  </span>   {{ form_widget(form.email) }}                  {{ form_errors(form.email) }}
+
+        <h4>Bank Account Details</h4>
+
+        <span>{{ form_label(form.bankName)}}               </span>   {{ form_widget(form.bankName) }}               {{ form_errors(form.bankName) }}
+        <span>{{ form_label(form.bankAccountNo)}}          </span>   {{ form_widget(form.bankAccountNo) }}          {{ form_errors(form.bankAccountNo) }}
+        <span>{{ form_label(form.ifsc)}}                   </span>   {{ form_widget(form.ifsc) }}                   {{ form_errors(form.ifsc) }}
+
+        <h4>Post Office Account Details</h4> 
+
+        <span>{{ form_label(form.poBranchName)}}           </span>   {{ form_widget(form.poBranchName) }}           {{ form_errors(form.poBranchName) }}
+        <span>{{ form_label(form.poBranch)}}               </span>   {{ form_widget(form.poBranch) }}               {{ form_errors(form.poBranch) }}
+        <span>{{ form_label(form.beneficiaryAccountNo)}}   </span>   {{ form_widget(form.beneficiaryAccountNo) }}   {{ form_errors(form.beneficiaryAccountNo) }}
+
+        <p>{{ form_widget(form.submit) }}{{ form_widget(form.reset) }}</p>  
+
+        <div>{{ form_errors(form) }}</div>
+    {{ form_end(form) }}    
+    </form>
+    <div id="reg_submit" class="my-dialog" title="Candidate Registration Confirmation">
+        <table  id="basic">
+            <tr><td>-You need to remember your password.</td></tr>
+            <tr><td>-You need to remember your security question and answer.</td></tr>
+            <tr><td>-You need to check the following details furnished by you.</td></tr>
+        </table>
+        <table id="condent" align="center">
+            <tr><td>Name : <span id="name"></span></td></tr>
+            <tr><td>Date of Birth : <span id="dob"></span></td></tr>
+            <tr><td>Email : <span id="email"></span></td></tr>
+            <tr><td>Mobile No : <span id="mob"></span></td></tr>
+        </table>
+    </div>
+</div>
+{% block javascripts %}    
+<script type="text/javascript">
+    (function($) {
+        $(document).ready(function() {
+            $("img#error").hide();
+            var thisForm = $("#{{form.vars.name}}");
+            thisForm.applyMust();
+
+            thisForm.validate({
+                rules: {
+                    '{{form.password.vars.full_name}}': "required",
+                    '{{form.checkpassword.vars.full_name}}': {
+                        equalTo: "#{{form.password.vars.id}}"
+                    }
+                }, messages: {
+                    '{{form.password.vars.full_name}}': "Password venam",
+                    '{{form.checkpassword.vars.full_name}}': {
+                        required: "Confirm Password Venam",
+                        equalTo: "Mismatch in first Password"
+                    }
+                }
+            });
+            $("#{{form.email.vars.id}}").focusout(function() {
+                var path = "{{ path('email_availablility_check') }}";
+                var email = $(this).val();
+                if (IsEmail(email) === true) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: path,
+                        data: { {{form.email.vars.name }}: email},
+                        success: function(result) {
+                            if (result.status === true) {
+                                $("img#error").show();
+                            } else {
+                                $("img#error").hide();
+                            }
+                        }
+                    });
+                }
+                $("img#error").hide();
+            });
+
+
+            function IsEmail(email) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (!regex.test(email)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            $("#{{form.submit.vars.id}}").click(function() {
+                hashPasswords();
+                if (thisForm.valid()) {
+                    var path = "{{ path('registration_new_save') }}";
+                    $.ajax({
+                        type: 'POST',
+                        url: path,
+                        data: thisForm.serialize(),
+                        success: function(result) {
+                            __loadRegistrationFormCB(result);
+                        }
+                    });
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        function hashPasswords() {
+            var pwd1 = $("#{{form.password.vars.id}}");
+            var pwd2 = $("#{{form.checkpassword.vars.id}}");
+            if (!(pwd1.val() === null || pwd2.val() === "")) {
+                var baS1 = sjcl.hash.sha256.hash(pwd1.val());
+                var digestS1 = sjcl.codec.hex.fromBits(baS1);
+                var baS2 = sjcl.hash.sha256.hash(pwd2.val());
+                var digestS2 = sjcl.codec.hex.fromBits(baS2);
+                pwd1.val(digestS1);
+                pwd2.val(digestS2);
+            }
+        }
+
+    })(jQuery);
+</script>
+{% endblock %}

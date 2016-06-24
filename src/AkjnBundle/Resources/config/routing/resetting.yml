@@ -1,0 +1,4 @@
+reset_request:
+    path:  /request
+    defaults: { _controller: "AkjnBundle:Resetting:index" }
+    requirements: { method: post }    

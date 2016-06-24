@@ -1,0 +1,38 @@
+services:
+    security.authentication.listener.securedlogin:
+        class:  AkjnBundle\Security\Firewall\SecuredLoginAuthenticationListener
+        parent: security.authentication.listener.abstract
+        abstract: true
+        calls:
+            - [loadTranslator, ["@translator"]]
+            - [loadContainer, ["@service_container"]]
+
+    security.encoder.securedlogin:
+        class: AkjnBundle\Security\Encoder\SecuredLoginPasswordEncoder
+        
+    security.authenticator.securedlogin:
+        class: AkjnBundle\Security\Firewall\SecuredLoginFormAuthenticator
+        arguments: [@security.encoder_factory, @router, %akjn.route_referer%, "@service_container"]
+        
+    akjn.security.handler.login_failure_handler:
+        class:  AkjnBundle\Security\Handler\LoginFailureHandler
+        arguments: [ @router, %akjn.login_shield.route_login%]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    akjn.security.handler.login_success_handler:
+        class: AkjnBundle\Security\Handler\LoginSuccessHandler
+        arguments:  [ @router, %akjn.route_referer%, @security.context, "@service_container" ]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+
+    akjn.security.handler.logout_success_handler:
+        class:  AkjnBundle\Security\Handler\LogoutSuccessHandler
+        arguments:  [@router, %akjn.route_referer%, %akjn.login_shield.route_login%]
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }
+    session_idle_handler:
+        class:  AkjnBundle\Security\Handler\SessionIdleHandler
+        arguments: ["@session", "@security.context", "@router", %session_max_idle_time%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }   

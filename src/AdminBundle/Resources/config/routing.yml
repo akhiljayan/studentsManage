@@ -1,0 +1,7 @@
+home_page:
+    path:  /
+    defaults: { _controller: "AkjnBundle:Login:login" }
+
+_index:
+    pattern: /panel
+    defaults: { _controller: "AdminBundle:Default:mainRedirect" }

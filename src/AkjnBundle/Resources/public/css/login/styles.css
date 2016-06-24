@@ -1,0 +1,276 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic);
+/*!
+ *   Thozhil Portal v2.3.0
+ *   Author: Bibin S Panicker
+ *	
+!*/
+/*
+ * Core: General Layout Style
+ * -------------------------
+ */
+html,
+body {
+    min-height: 100%;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+/* Content */
+/* H1 - H6 font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+/* General Links */
+a {
+    color: #3c8dbc;
+}
+a:hover,
+a:active,
+a:focus {
+    outline: none;
+    text-decoration: none;
+    color: #72afd2;
+}
+/* Page Header */
+/*
+ * Component: Main Header
+ * ----------------------
+ */
+.main-header #navbar-search-input.form-control:-ms-input-placeholder {
+    color: #ccc;
+}
+.main-header #navbar-search-input.form-control::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+
+
+/* Add fade animation to dropdown menus by appending
+ the class .animated-dropdown-menu to the .dropdown-menu ul (or ol)*/
+@keyframes flipInX {
+    0% {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        transition-timing-function: ease-in;
+        opacity: 0;
+    }
+    40% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        transition-timing-function: ease-in;
+    }
+    60% {
+        transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+        opacity: 1;
+    }
+    80% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    }
+    100% {
+        transform: perspective(400px);
+    }
+}
+@-webkit-keyframes flipInX {
+    0% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        -webkit-transition-timing-function: ease-in;
+        opacity: 0;
+    }
+    40% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
+        -webkit-transition-timing-function: ease-in;
+    }
+    60% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+        opacity: 1;
+    }
+    80% {
+        -webkit-transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    }
+    100% {
+        -webkit-transform: perspective(400px);
+    }
+}
+/* Fix dropdown menu in navbars */
+@media (max-width: 991px) {
+}
+/*
+ * Component: Form
+ * ---------------
+ */
+.form-control {
+    border-radius: 0;
+    box-shadow: none;
+    border-color: #d2d6de;
+}
+.form-control:focus {
+    border-color: #3c8dbc;
+    box-shadow: none;
+}
+.form-control::-moz-placeholder,
+.form-control:-ms-input-placeholder,
+.form-control::-webkit-input-placeholder {
+    color: #bbb;
+    opacity: 1;
+}
+.form-control:not(select) {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+/* Input group */
+.input-group .input-group-addon {
+    border-radius: 0;
+    border-color: #d2d6de;
+    background-color: #fff;
+}
+
+/*
+ * Component: Button
+ * -----------------
+ */
+.btn {
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid transparent;
+}
+.btn.btn-flat {
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-width: 1px;
+}
+.btn:active {
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.btn:focus {
+    outline: none;
+}
+.btn-primary {
+    background-color: #3c8dbc;
+    border-color: #367fa9;
+}
+.btn-primary:hover,
+.btn-primary:active
+{
+    background-color: #367fa9;
+}
+/*
+ * Component: alert
+ * ----------------
+ */
+.alert {
+    border-radius: 3px;
+}
+.alert-danger
+{
+    border-color: #d73925;
+}
+
+/* ADD THIS CLASS TO THE <BODY> TAG */
+/* User name [optional] */
+/* Will contain the image and the sign in form */
+/* User image */
+/* Contains the password input and the login button */
+/*
+ * Page: Login & Register
+ * ----------------------
+ */
+.login-logo
+{
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+.login-logo a
+{
+    color: #444;
+}
+.login-page
+{
+    background: #d2d6de;
+}
+.login-box
+{
+    width: 30%;
+    margin: 7% auto;
+}
+@media (max-width: 768px) {
+    .login-box
+    {
+        width: 90%;
+        margin-top: 20px;
+    }
+}
+.login-box-body
+{
+    background: #fff;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+}
+.login-box-body .form-control-feedback
+{
+    color: #777;
+}
+.login-box-msg
+{
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}
+/*
+ * General: Miscellaneous
+ * ----------------------
+ */
+.alert-danger
+{
+    color: #fff !important;
+}
+.alert-danger
+
+
+{
+    border-color: #E73629;
+    background: #F44336 none repeat scroll 0% 0%;
+}
+/*
+ * Misc: print
+ * -----------
+ */
+@media print {
+}
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+@keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}

@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+{% block title %}
+    School Attendence Management : Admin Pannel
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% block styleInAdminPage %}
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    {% block adminContent %} 
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% block jsInAdminPage %}
+    {% endblock %}
+    <script type="text/javascript">
+        $(".formErrorMsg").tooltip({
+            tooltipClass: "formErrorMsgTooltip"
+        });
+    </script>
+{% endblock %}

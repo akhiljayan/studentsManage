@@ -1,0 +1,108 @@
+<html>
+</body>
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/nicresources/css/jquery-ui/base/jquery-ui.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/nicresources/css/jquery-ui/base/jquery.ui.theme.css') }}" />
+<link href="{{ asset('bundles/nicresources/adminlte/css/bootstrap.min.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/nicresources/adminlte/css/AdminLTE.css') }}" rel="stylesheet">
+<link href="{{ asset('bundles/nicresources/adminlte/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+<ul>
+    <li>
+        <input type="button" value="Registration" onclick="__loadRegistrationForm()" />
+    </li>
+</ul>
+<ul>
+    <li>
+        <input type="button" value="Login" onclick="__loadLoginForm()" />
+    </li>
+</ul>
+<ul>
+    <li>
+        <input type="button" value="CP" onclick="__loadChangePasswordForm()" />
+    </li>
+</ul>
+<div id="dvRegistrationFormResult" ></div>
+<div id="dvRegistrationForm" style="display: none;"></div>
+<div id="dvloginForm"></div>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/jquery/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/jquery-ui/minified/jquery-ui.min.js') }}"  ></script>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/sjcl.js') }}"  ></script>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/must.js') }}"  ></script>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/jquery.validate.min.js') }}"  ></script>
+<script type="text/javascript" src="{{ asset('bundles/nicresources/js/additional-methods.min.js') }}"  ></script>
+<script type="text/javascript">
+    dvR = $("#dvRegistrationForm");
+    dvRR = $("#dvRegistrationFormResult");
+    function __loadRegistrationForm() {
+        var path = "{{ path('registration_new') }}";
+        $.ajax({
+            type: 'POST',
+            url: path,
+            success: function (result) {
+                dvR.html(result);
+                dvR.dialog({
+                    title: "New Registration",
+                    position: {at: "center top", of: window},
+                    width: "65%",
+                    modal: true
+                });
+                __loadRegistrationFormPostLoad();
+            }
+        });
+    }
+    function __loadRegistrationFormCB(response) {
+        dvR.dialog("close");
+        dvRR.html(response);
+        if (response === 'SUCCESS') {
+            dvRR.html(response);
+        }
+    }
+    function __loadLoginForm() {
+        var path = "{{ path('login') }}";
+        $.ajax({
+            type: 'POST',
+            url: path,
+            success: function (result) {
+                dvR.html(result);
+                dvR.dialog({
+                    title: "Please Login",
+                    position: {at: "center top", of: window},
+                    width: "65%",
+                    modal: true
+                });
+            }
+        });
+    }
+    function __loadLoginFormCB(response) {
+        dvR.dialog("close");
+        dvRR.html(response);
+        if (response === 'SUCCESS') {
+            dvRR.html(response);
+        }
+    }
+    function __loadChangePasswordForm() {
+        var path = "{{ path('change_user_password') }}";
+        $.ajax({
+            type: 'POST',
+            url: path,
+            success: function (result) {
+                dvR.html(result);
+                dvR.dialog({
+                    title: "Please Change Password",
+                    position: {at: "center top", of: window},
+                    width: "65%",
+                    modal: true
+                });
+                __loadChangePasswordInit();
+            }
+        });
+    }
+    function __loadChangePasswordCB(response) {
+        dvR.dialog("close");
+        dvRR.html(response);
+        if (response === 'SUCCESS') {
+            dvRR.html(response);
+        }
+    }
+</script>
+</body>
+</html>

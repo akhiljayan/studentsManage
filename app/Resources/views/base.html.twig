@@ -34,6 +34,11 @@
             <link rel="stylesheet" href="{{ asset('bundles/admin/admin/plugins/datepicker/datepicker3.css') }}">
             <link rel="stylesheet" href="{{ asset('bundles/admin/admin/plugins/daterangepicker/daterangepicker-bs3.css') }}">
             <link rel="stylesheet" href="{{ asset('bundles/admin/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+            
+            
+            
+            
+            
         {% endblock %}
     </head>
     <body>
@@ -61,6 +66,7 @@
             <script src="{{ asset('bundles/admin/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
             <script src="{{ asset('bundles/admin/admin/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
             
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
             <script src="{{ asset('bundles/admin/admin/plugins/fastclick/fastclick.js') }}"></script>
             <script src="{{ asset('bundles/admin/admin/dist/js/app.min.js') }}"></script>
             <script src="{{ asset('bundles/admin/admin/dist/js/pages/dashboard.js') }}"></script>
@@ -69,6 +75,9 @@
             <script type="text/javascript">
                 (function ($) {
                     $(document).ready(function () {
+                        $('body').addClass('hold-transition');
+                        $('body').addClass('skin-blue');
+                        $('body').addClass('sidebar-mini');
                         var $imgLoading = '<img src="{{ asset('bundles/app/images/ajax-loader.gif')}}" alt="Loading" /> ';
                         $("a").tooltip({
                             animation: true,

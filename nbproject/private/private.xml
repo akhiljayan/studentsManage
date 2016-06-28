@@ -3,10 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/var/www/html/pwc/students/app/Resources/views/base.html.twig</file>
-            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/DefaultMaster/masterAdmin.html.twig</file>
-            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/Default/index.html.twig</file>
-            <file>file:/var/www/html/pwc/students/src/AkjnBundle/Resources/views/User/login.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Entity/ClassRoom.php</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/MainAdmin/index.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Controller/DefaultController.php</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/MainAdmin/ClassRooms/addClassForm.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/config/routing.yml</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/DefaultMaster/masterAdmin.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Form/ClassRoomType.php</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/MainAdmin/ClassRooms/listClasses.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/MainAdmin/ClassRooms/manageClasses.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/config/masters.yml</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AkjnBundle/Resources/views/User/login.html.twig</file>
+            <file>file:/opt/lampp/htdocs/studentsManage/src/AdminBundle/Resources/views/DefaultMaster/masterPannel.html.twig</file>
         </group>
     </open-files>
 </project-private>

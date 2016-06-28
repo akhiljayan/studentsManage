@@ -34,11 +34,18 @@ class ClassRoom
      * @ORM\Column(name="classString", type="string", length=25)
      */
     private $classString;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="roomNumber", type="string", length=25)
+     */
+    private $roomNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="classAttendenceTable", type="string", length=50)
+     * @ORM\Column(name="classAttendenceTable", type="string", length=50, nullable=true)
      */
     private $classAttendenceTable;
 
@@ -124,5 +131,28 @@ class ClassRoom
     {
         return $this->classAttendenceTable;
     }
-}
 
+    /**
+     * Set roomNumber
+     *
+     * @param string $roomNumber
+     *
+     * @return ClassRoom
+     */
+    public function setRoomNumber($roomNumber)
+    {
+        $this->roomNumber = $roomNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get roomNumber
+     *
+     * @return string
+     */
+    public function getRoomNumber()
+    {
+        return $this->roomNumber;
+    }
+}

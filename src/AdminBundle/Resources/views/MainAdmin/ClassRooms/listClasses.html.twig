@@ -1,0 +1,38 @@
+{%if classes|length > 0%}
+    <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:50%; margin-left: auto;margin-right: auto;">
+        <thead class=" bg-light-blue-gradient">
+            <tr>
+                <th>#</th>
+                <th>Class number</th>
+                <th>Class in words</th>
+                <th>Room number</th>
+                    {% if is_granted('ROLE_SM_SUPERUSER') %}
+                    <th>Database table Name</th>
+                    {%endif%}
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for class in classes %}
+                <tr id="{{class.id}}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ class.classNum }}</td>
+                    <td>{{ class.classString }}</td>
+                    <td>{{ class.roomNumber }}</td>
+                    {% if is_granted('ROLE_SM_SUPERUSER') %}
+                        {%if class.classAttendenceTable == ""%}
+                            <td style="text-align:center">-</td>
+                        {%else%}
+                            <td>{{ class.classAttendenceTable }}</td>
+                        {%endif%}
+                    {%endif%}
+                    <td style="text-align:center">
+                        <span class="label label-warning" id="edit-class" data-id="{{class.id}}" style=" cursor: pointer">Edit</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    <h4 class="alert alert-info"> There Records found </h4>
+{%endif%}

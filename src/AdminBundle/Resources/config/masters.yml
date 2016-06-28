@@ -1,0 +1,16 @@
+masters_manage_class:
+    pattern: /class
+    defaults: { _controller: "AdminBundle:Default:mastersClass" }
+    
+list_added_classes:
+    pattern: /class/list
+    defaults: { _controller: "AdminBundle:Default:mastersClassList" }
+    
+add_new_class_form:
+    pattern: /class/add-new
+    defaults: { _controller: "AdminBundle:Default:mastersClassAddNew" }
+    
+edit_new_class_form:
+    pattern: /class/{id}/edit
+    defaults: { _controller: "AdminBundle:Default:mastersClassEdit" }
+    

@@ -5,3 +5,7 @@ home_page:
 _index:
     pattern: /panel
     defaults: { _controller: "AdminBundle:Default:mainRedirect" }
+
+masters:
+    resource: "masters.yml"
+    prefix:  /masters

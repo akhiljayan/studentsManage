@@ -15,40 +15,40 @@
     <section class="content-header">
         <h1>
             Dashboard
-            <small>Masters</small>
+            <small>System Users</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-            <li class="active">Masters</li>
+{#            <li class="active">Masters</li>#}
         </ol>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-md-4 col-sm-7 col-xs-12">
-                <a class="info-box"  href="{{path('masters_add_students')}}">
+                <a class="info-box"  href="{{path('list_students_details')}}">
                     <span class="info-box-icon bg-green"><i class="ion ion-ios-people-outline"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-number">Students</span>
-                        <small>Add students details</small>
+                        <span class="info-box-number">Student Details</span>
+                        <small>View student details</small>
                     </div>
                 </a>
             </div>
             <div class="col-md-4 col-sm-7 col-xs-12">
-                <a class="info-box"  href="{{path('masters_manage_class')}}">
+                <a class="info-box"  href="{{path('students_attendence_manage')}}">
                     <span class="info-box-icon bg-red"><i class="fa fa-suitcase" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-number">Class</span>
-                        <small>Manage class</small>
+                        <span class="info-box-number">Attendence</span>
+                        <small>Record attendence of students</small>
                     </div>
                 </a>
             </div>
             <div class="clearfix visible-sm-block"></div>
             <div class="col-md-4 col-sm-7 col-xs-12">
-                <a class="info-box" href="{{path('masters_manage_division')}}">
+                <a style="cursor: not-allowed" class="info-box" href="javascript:void(0);" title="Service unavailable">
                     <span class="info-box-icon bg-aqua"><i class="fa fa-thumb-tack" aria-hidden="true"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-number">Division</span>
-                        <small>Manage divisions of class</small>
+                        <span class="info-box-number">Acadamics</span>
+                        <small>Record Accadamic details</small>
                     </div>
                 </a>
             </div>

@@ -1,0 +1,54 @@
+{%if numStu|length > 0 %}
+    {%if  numStu == 0%}
+        <h4 class="alert alert-info"> Number of students cannot be zero</h4>
+    {%else%}
+        <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:89%; margin-left: auto;margin-right: auto;">
+            <thead class=" bg-light-blue-gradient">
+                <tr>
+                    <th>Roll No.</th>
+                    <th>Students Name</th>
+                    <th>Gender</th>
+                    <th>Date of birth</th>
+                    <th>Admission Number</th>
+                    <th>Fathers Name</th>
+                    <th>Mothers Name</th>
+                    <th>Parents Mobile</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for num in range(1,numStu)%}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td style="text-align:center">
+                            <input type='text' name='student_name_{{num}}' data-val="{{num}}" data-mean="Students Name" id='student-{{num}}' class='students-name form-control student-input'>
+                        </td>
+                        <td style="text-align:center">
+                            <select id="gender-{{num}}" class="students-name form-control student-input" required="required" name="gender_{{num}}">
+                                <option selected="selected" value="">-Gender-</option>
+                                <option value="M">M</option>
+                                <option value="F">F</option>
+                            </select>
+                        </td>
+                        <td style="text-align:center">
+                            <input type="text" name='dob_{{num}}' data-val="{{num}}" data-mean="Date of birth" id="dob-{{num}}" class="dob date-picker form-control" required="required" placeholder="dd-mm-yyyy">
+                        </td>
+                        <td style="text-align:center">
+                            <input type='text' name='admission_number_{{num}}' data-val="{{num}}" data-mean="Admission Number" id='admission-number-{{num}}' class='admission-number form-control student-input'>
+                        </td>
+                        <td style="text-align:center">
+                            <input type='text' name='fathers_name_{{num}}' data-val="{{num}}" data-mean="Fathers Name" id='fathers-name-{{num}}' class='fathers-name form-control student-input'>
+                        </td>
+                        <td style="text-align:center">
+                            <input type='text' name='mothers_name_{{num}}'  data-val="{{num}}" data-mean="Mothers Name" id='mothers-name-{{num}}' class='mothers-name form-control student-input'>
+                        </td>
+                        <td style="text-align:center">
+                            <input type='text' name='mobile_number_{{num}}'  data-val="{{num}}" data-mean="Mobile number" id='student-{{num}}' class='mobile-number form-control student-input' maxlength='10'>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {%endif%}
+{%else%}
+    <h4 class="alert alert-info"> Please fill above fields </h4>
+{%endif%}

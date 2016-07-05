@@ -126,16 +126,16 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="{{ asset('bundles/admin/admin/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Full Name</span>
+                                <img src="{{ asset('bundles/admin/admin/dist/img/user-default.jpg') }}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{{app.user.name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header">
-                                    <img src="{{ asset('bundles/admin/admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                    <img src="{{ asset('bundles/admin/admin/dist/img/user-default.jpg') }}" class="img-circle" alt="User Image">
 
                                     <p>
-                                        Full Name
-                                        <small>Designation</small>
+                                        {{app.user.name}}
+                                        <small>{{app.user.username}}</small>
                                     </p>
                                 </li>
 
@@ -160,38 +160,83 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <ul class="sidebar-menu">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <li class="active treeview">
-                        {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision'%}
-                            <a href="#" style=" background-color: white; color:black">
-                                <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
-                            </a>
+                    <a href="{{path('_index')}}"><li class="header">MAIN NAVIGATION</li></a>
+                        {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
+                            {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision'%}
+                            <li class="active treeview">
+                                <a href="{{path('_index')}}">
+                                    <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    {%if flag == 'indexMasters'%}
+                                        <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
+                                        <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
+                                        <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        {%elseif flag == 'manageStudents'%}
+                                        <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
+                                        <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
+                                        <li class="active"><a href="javascript:void(0)"><i class="fa fa-circle-o text-red"></i> Add Students</a></li>
+                                        {%elseif flag == 'manageClass'%}
+                                        <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Class</a></li>
+                                        <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
+                                        <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        {%else%}
+                                        <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
+                                        <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Division</a></li>
+                                        <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        {%endif%}
+                                </ul>
+                            </li>
                         {%else%}
-                            <a href="#">
-                                <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
-                            </a>
+                            <li class="treeview">
+                                <a href="{{path('_index')}}">
+                                    <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
+                                    <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
+                                    <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                </ul>
+                            </li>
                         {%endif%}
-                        <ul class="treeview-menu">
-                            {%if flag == 'indexMasters'%}
-                                <li><a href="index.html"><i class="fa fa-circle-o"></i> Manage Students</a></li>
-                                <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
-                                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Manage Division</a></li>
-                                {%elseif flag == 'manageStudents'%}
-                                <li class="active"><a href="index.html"><i class="fa fa-circle-o text-red"></i> Manage Students</a></li>
-                                <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
-                                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Manage Division</a></li>
-                                {%elseif flag == 'manageClass'%}
-                                <li><a href="index.html"><i class="fa fa-circle-o"></i> Manage Students</a></li>
-                                <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Class</a></li>
-                                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Manage Division</a></li>
-                                {%else%}
-                                <li><a href="index.html"><i class="fa fa-circle-o"></i> Manage Students</a></li>
-                                <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
-                                <li class="active"><a href="index2.html"><i class="fa fa-circle-o text-red"></i> Manage Division</a></li>
-                                {%endif%}
-                        </ul>
-                    </li>
-                    <li class="treeview">
+                    {%endif%}
+
+
+                    {%if flag == 'listStudents'%}
+                        <li class="active">
+                            <a href="{{path('list_students_details')}}"><i class="fa fa-book"></i> <span>Student Details</span></a>
+                        </li>
+                    {%else%}
+                        <li>
+                            <a href="{{path('list_students_details')}}"><i class="fa fa-book"></i> <span>Student Details</span></a>
+                        </li>
+                    {%endif%}
+
+
+                    {%if flag == 'attendence'%}
+                        <li class="active">
+                            <a href="{{path('students_attendence_manage')}}"><i class="fa fa-files-o"></i> <span>Attendence</span></a>
+                        </li>
+                    {%else%}
+                        <li>
+                            <a href="{{path('students_attendence_manage')}}"><i class="fa fa-files-o"></i> <span>Attendence</span></a>
+                        </li>
+                    {%endif%}
+
+                    {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
+                        {%if flag == 'userManagement'%}
+                            <li class="active">
+                                <a href="{{path('user_management')}}"><i class="fa fa-users"></i> <span>User Management</span></a>
+                            </li>
+                        {%else%}
+                            <li>
+                                <a href="{{path('user_management')}}"><i class="fa fa-users"></i> <span>User Management</span></a>
+                            </li>
+                        {%endif%}
+                    {%endif%}
+
+
+                    {#<li class="treeview">
                         <a href="#">
                             <i class="fa fa-files-o"></i>
                             <span>Layout Options</span>
@@ -311,11 +356,10 @@
                             <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                         </ul>
                     </li>
-                    <li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
                     <li class="header">LABELS</li>
                     <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>#}
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -323,7 +367,7 @@
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            
+
             <!-- Main content -->
             {% block mainPannelContent %} 
                 {{flag}}

@@ -41,6 +41,13 @@ class MasterStudents
      * @ORM\Column(name="studentsName", type="string", length=50)
      */
     private $studentsName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gender", type="string", length=1)
+     */
+    private $gender;
 
     /**
      * @ORM\ManyToOne(targetEntity="AdminBundle\Entity\ClassRoom")
@@ -57,7 +64,7 @@ class MasterStudents
     /**
      * @var string
      *
-     * @ORM\Column(name="address", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
@@ -85,16 +92,27 @@ class MasterStudents
     /**
      * @var int
      *
-     * @ORM\Column(name="landPhoneNumber", type="integer")
+     * @ORM\Column(name="landPhoneNumber", type="integer", nullable=true)
      */
     private $landPhoneNumber;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="parentsEMail", type="string", length=50)
+     * @ORM\Column(name="parentsEMail", type="string", length=50, nullable=true)
      */
     private $parentsEMail;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dob", type="datetime")
+     */
+    private $dob;
+    
+    public function __construct() {
+        $this->guId = md5(uniqid(php_uname('n')));
+    }
 
 
     /**
@@ -369,5 +387,53 @@ class MasterStudents
     public function getDivision()
     {
         return $this->division;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param string $gender
+     *
+     * @return MasterStudents
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set dob
+     *
+     * @param \DateTime $dob
+     *
+     * @return MasterStudents
+     */
+    public function setDob($dob)
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    /**
+     * Get dob
+     *
+     * @return \DateTime
+     */
+    public function getDob()
+    {
+        return $this->dob;
     }
 }

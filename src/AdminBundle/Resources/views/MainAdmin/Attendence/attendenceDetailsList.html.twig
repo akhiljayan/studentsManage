@@ -1,0 +1,89 @@
+<style type="text/css">
+    .onoffswitch {
+        position: relative; width: 100px;
+        -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    }
+    .onoffswitch-checkbox {
+        display: none;
+    }
+    .onoffswitch-label {
+        display: block; overflow: hidden; cursor: pointer;
+        border: 2px solid #999999; border-radius: 20px;
+    }
+    .onoffswitch-inner {
+        display: block; width: 200%; margin-left: -100%;
+        transition: margin 0.3s ease-in 0s;
+    }
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+        font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+        box-sizing: border-box;
+    }
+    .onoffswitch-inner:before {
+        content: "Present";
+        padding-left: 0px;
+        background-color: #34A7C1; color: #FFFFFF;
+    }
+    .onoffswitch-inner:after {
+        content: "Absent";
+        padding-right: 10px;
+        background-color: #EEEEEE; color: #999999;
+        text-align: right;
+    }
+    .onoffswitch-switch {
+        display: block; width: 18px; margin: 6px;
+        background: #FFFFFF;
+        position: absolute; top: 0; bottom: 0;
+        right: 66px;
+        border: 2px solid #999999; border-radius: 20px;
+        transition: all 0.3s ease-in 0s; 
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+        margin-left: 0;
+    }
+    .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+        right: 0px; 
+    }
+</style>
+{%if attendenceDetails|length > 0%}
+    <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:89%; margin-left: auto;margin-right: auto;margin-top:10px">
+        <thead class=" bg-light-blue-gradient">
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Admission Number</th>
+                <th>Attendence</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendenceDetail in attendenceDetails %}
+                <tr id="{{attendenceDetail.id}}">
+                    <td>{{ loop.index }}</td>
+                    <td>{{ attendenceDetail.student.studentsName }}</td>
+                    <td>{{ attendenceDetail.student.admissionNumber }}</td>
+                    <td style="text-align:center">
+                        {%if attendenceDetail.attendence %}
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" checked>
+                                <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        {%else%}
+                            <div class="onoffswitch">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" >
+                                <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                    <span class="onoffswitch-inner"></span>
+                                    <span class="onoffswitch-switch"></span>
+                                </label>
+                            </div>
+                        {%endif%}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    <h4 class="alert alert-info"> There Records found </h4>
+{%endif%}

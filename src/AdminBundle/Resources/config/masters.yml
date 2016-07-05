@@ -14,3 +14,39 @@ edit_new_class_form:
     pattern: /class/{id}/edit
     defaults: { _controller: "AdminBundle:Default:mastersClassEdit" }
     
+masters_add_students:
+    pattern: /add/students
+    defaults: { _controller: "AdminBundle:Students:mastersManageAddStudents" }
+    
+masters_manage_division:
+    pattern: /division
+    defaults: { _controller: "AdminBundle:Default:mastersDivision" }
+    
+list_added_division:
+    pattern: /division/list
+    defaults: { _controller: "AdminBundle:Default:mastersDivisionList" }
+    
+add_new_division_form:
+    pattern: /division/add-new
+    defaults: { _controller: "AdminBundle:Default:mastersDivisionAddNew" }
+    
+edit_new_division_form:
+    pattern: /division/{id}/edit
+    defaults: { _controller: "AdminBundle:Default:mastersDivisionEdit" }
+    
+user_management:
+    pattern: /user/management
+    defaults: { _controller: "AdminBundle:User:userManagementManage" }
+    
+list_added_users:
+    pattern: /user/list
+    defaults: { _controller: "AdminBundle:User:userManagementList" }
+    
+enable_disable_user:
+    pattern: /user/enable-{id}disable
+    defaults: { _controller: "AdminBundle:User:enableDisableUser" }
+    
+add_new_user_form:
+    pattern: /user/new/user/form
+    defaults: { _controller: "AdminBundle:User:addNewUserForm" }
+

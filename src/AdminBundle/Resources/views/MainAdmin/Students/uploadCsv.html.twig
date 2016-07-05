@@ -1,0 +1,46 @@
+{{ form_start(form) }}
+<div class="modal-header">
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">Upload CSV</h4>
+</div>
+<style type="text/css">
+    #info-on-upload{
+        background-color: #4f805d;
+        border-radius: 4px;
+        margin-bottom:10px;
+        color: white;
+    }
+</style>
+<div class="modal-body">
+    <span class="info-on-upload col-md-12" id="info-on-upload"> 
+        <h4>Uploading Instructions</h4>
+        <ul>
+            <li>Click <a href="javascript:void(0);">here</a> download the exel template and fill the details of the students</li>
+            <li>Please note that the heading is of each column is the same as given in the template. Dont change the heading.</li>
+            <li>After filling student details in the exel sheet, save it as CSV file (coma seperated value file).</li>
+            <li>Select class, division and Upload the newly created CSV file then click submit.</li>
+        </ul>
+    </span>
+    <table class="table table-bordered table-striped table-condensed CaptionSmall">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.class) }}</td>
+                <td>{{ form_widget(form.class) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.division) }}</td>
+                <td>{{ form_widget(form.division) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.csvFile) }}</td>
+                <td>{{ form_widget(form.csvFile) }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-outline pull-left" type="button">Close</button>
+    {{ form_row(form.submit) }}
+</div>
+{{ form_end(form) }}

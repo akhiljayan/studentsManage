@@ -1,5 +1,5 @@
 {% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
-{% set flag = 'manageClass' %}
+{% set flag = 'manageDivision' %}
 {% block mainPannelStyle %}
     {{ parent() }}
     <style type="text/css">
@@ -12,26 +12,26 @@
 {% block mainPannelContent %} 
     <section class="content-header">
         <h1>
-            Manage Class
+            Manage Divisions
             <small>Masters</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
-            <li class="active">Manage Class Rooms</li>
+            <li class="active">Manage Divisions</li>
         </ol>
     </section>
     <section class="content">
         <div class="row">
             <div class="pull-right" style="padding-right:15px">
-                <a class="btn btn-success" id="add-new-class">Add New</a>
+                <a class="btn btn-success" id="add-new-division">Add New</a>
             </div>
         </div>
-        <div class="row"  style="padding-right:15px" id="list-class-table">
+        <div class="row"  style="padding-right:15px" id="list-division-table">
             {#Table put here#}
         </div>
     </section>
 
-    <div class="modal fade" id="add-class-room-modal" area-hidden="true" role="dialog" tabindex="-1">
+    <div class="modal fade" id="add-division-modal" area-hidden="true" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content" id="modal-content">
 
@@ -44,12 +44,12 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function () {
-            var loadPath = "{{path('list_added_classes')}}";
+            var loadPath = "{{path('list_added_division')}}";
             __loadPage(loadPath);
 
 
-            $("#add-new-class").click(function () {
-                var $path = "{{path('add_new_class_form')}}";
+            $("#add-new-division").click(function () {
+                var $path = "{{path('add_new_division_form')}}";
                 $.ajax({
                     type: "POST",
                     url: $path,
@@ -59,7 +59,7 @@
                     },
                     success: function ($data) {
                         $("#modal-content").html($data);
-                        $("#add-class-room-modal").modal('show');
+                        $("#add-division-modal").modal('show');
                     },
                     complete: function () {
                         $(this).next(".loading-img").remove();
@@ -68,9 +68,9 @@
             });
 
         {#            $("#edit-class").click(function () {#}
-                $("body").on('click', '.edit-class', function () {
+                $("body").on('click', '.edit-division', function () {
                     var id = $(this).data('id');
-                    var $path = "{{path('edit_new_class_form',{'id':'__id__'})}}";
+                    var $path = "{{path('edit_new_division_form',{'id':'__id__'})}}";
                     $path = $path.replace("__id__", id);
                     $.ajax({
                         type: "POST",
@@ -81,7 +81,7 @@
                         },
                         success: function ($data) {
                             $("#modal-content").html($data);
-                            $("#add-class-room-modal").modal('show');
+                            $("#add-division-modal").modal('show');
                         },
                         complete: function () {
                             $(this).next(".loading-img").remove();
@@ -94,13 +94,13 @@
                         type: "POST",
                         url: path,
                         beforeSend: function () {
-                            $("#list-class-table").append('<div class="overlay"></div><div class="loading-img"></div>');
+                            $("#list-division-table").append('<div class="overlay"></div><div class="loading-img"></div>');
                         },
                         success: function (data) {
-                            $("#list-class-table").html(data);
+                            $("#list-division-table").html(data);
                         },
                         complete: function () {
-                            $("#list-class-table").find(".overlay, .loading-img").remove();
+                            $("#list-division-table").find(".overlay, .loading-img").remove();
                         }
 
                     });

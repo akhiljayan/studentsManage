@@ -1,0 +1,117 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'attendence' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            Attendence 
+            <small>Record Daily attendece</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>Attendence</a></li>
+                {#            <li class="active">Add Students</li>#}
+        </ol>
+    </section>
+    {{ form_start(form) }}
+    <section class="content">
+        <div class="row">
+            <div class="panel panel-primary" style="margin: 0 15px 15px 15px;">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            {{form_row(form.date,{'attr': {'class': 'date-picker'} })}}
+                        </div>
+                        <div class="col-md-3">
+                            {{form_label(form.class)}}
+                            {{form_widget(form.class)}}
+                        </div>
+                        <div class="col-md-3">
+                            {{form_label(form.division)}}
+                            {{form_widget(form.division)}}
+                        </div>
+                        <div class='col-md-3'>
+                            <span class='btn btn-success pull-right' style='margin-top:7%' id='list-student-for-attendence'>Add</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"  style="padding-right:15px;" id="list-student-table">
+            {#Table put here#}
+        </div>
+    </section>
+    {{ form_end(form) }}
+
+    <div class="modal fade" id="edit-student-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:70%">
+            <div class="modal-content" id="modal-content-student" >
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#list-student-for-attendence").click(function () {
+                var date = $("#{{form.date.vars.id}}").val();
+                var classId = $("#{{form.class.vars.id}}").val();
+                var division = $("#{{form.division.vars.id}}").val();
+                var $path = "{{path('list_student_attendence_table')}}";
+                $.ajax({
+                    type: "POST",
+                    url: $path,
+                    data: {'classId': classId, 'division': division, 'date': date},
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        $("#list-student-table").html($data);
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+
+            $("body").on('change', ".onoffswitch-checkbox", function () {
+                var id = $(this).data("id");
+                var attendence = $(this).data("attendence");
+                var path = "{{path('absent_present_student',{'id':'__id__','attendence':'__attendence__'})}}";
+                path = path.replace('__id__', id);
+                path = path.replace('__attendence__', attendence);
+                if ($(this).prop('checked')) {
+                    var flag = "on";
+                } else {
+                    var flag = "off";
+                }
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: {'flag': flag},
+                    beforeSend: function () {
+                    },
+                    success: function ($data) {
+                        if ($data) {
+                        }
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

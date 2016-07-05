@@ -1,0 +1,38 @@
+{{ form_start(form,{'attr':{'id':'registration-form'} }) }}
+<div class="modal-header">
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">Add new user</h4>
+</div>
+<div class="modal-body">
+    <table class="table table-bordered table-striped table-condensed CaptionSmall">
+        <tbody>
+            <tr>
+                <td>{{ form_label(form.name) }}:</td>
+                <td>{{ form_widget(form.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.username) }}:</td>
+                <td>{{ form_widget(form.username) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.email) }}:</td>
+                <td>{{ form_widget(form.email) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.mobile) }}:</td>
+                <td>{{ form_widget(form.mobile) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(form.role) }}:</td>
+                <td>{{ form_widget(form.role) }}</td>
+            </tr>
+        </tbody>
+    </table>
+            {{ form_row(form.password) }}
+</div>
+<div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-outline pull-left" type="button">Close</button>
+    {{ form_row(form.save) }}
+</div>
+{{ form_end(form) }}

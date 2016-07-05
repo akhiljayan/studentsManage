@@ -1,0 +1,56 @@
+{%if students|length > 0%}
+    <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:89%; margin-left: auto;margin-right: auto;">
+        <thead class=" bg-light-blue-gradient">
+            <tr>
+                <th>Roll Number</th>
+                <th>Student Name</th>
+                <th>Gender</th>
+                <th>Admission Number</th>
+                <th>Fathers Name</th>
+                <th>Mothers Name</th>
+                <th>Address</th>
+                <th>Patent Mobile</th>
+                <th>Land Line</th>
+                <th>Parent e-mail</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr id="{{student.guId}}">
+                    <td>{{loop.index}}</td>
+                    <td>{{ student.studentsName }}</td>
+                    {%if student.gender == ""%}
+                        <td style="text-align:center">-</td>
+                    {%else%}
+                        <td>{%if student.gender == 'M'%}Male{%else%}Female{%endif%}</td>
+                    {%endif%}
+                    <td>{{ student.admissionNumber }}</td>
+                    <td>{{ student.fathersName }}</td>
+                    <td>{{ student.mothersName }}</td>
+                    {%if student.address == ""%}
+                        <td style="text-align:center">-</td>
+                    {%else%}
+                        <td>{{ student.address }}</td>
+                    {%endif%}
+                    <td>{{ student.parentsMobNumber }}</td>
+                    {%if student.landPhoneNumber == ""%}
+                        <td style="text-align:center">-</td>
+                    {%else%}
+                        <td>{{ student.landPhoneNumber }}</td>
+                    {%endif%}
+                    {%if student.parentsEMail == ""%}
+                        <td style="text-align:center">-</td>
+                    {%else%}
+                        <td>{{ student.parentsEMail }}</td>
+                    {%endif%}
+                    <td style="text-align:center">
+                        <span class="label label-warning edit-student" data-id="{{student.guId}}" style=" cursor: pointer">Edit</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    <h4 class="alert alert-info"> There Records found </h4>
+{%endif%}

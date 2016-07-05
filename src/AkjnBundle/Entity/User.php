@@ -7,14 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\AttributeOverride;
 use Doctrine\ORM\Mapping\AttributeOverrides;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="admin_users")
- * @ORM\AttributeOverrides({
- *      @ORM\AttributeOverride(name="email", column=@ORM\Column(type="string", name="email", length=255, unique=false, nullable=true)),
- *      @ORM\AttributeOverride(name="emailCanonical", column=@ORM\Column(type="string", name="email_canonical", length=255, unique=false, nullable=true))
- * })
+ *
  */
 class User extends BaseUser {
 
@@ -37,10 +33,24 @@ class User extends BaseUser {
     protected $isLogged = 0;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50)
+     */
+    private $name;
+
+    /**
      *
      * @ORM\Column(type="datetime",name="attempted_at", nullable=true)
      */
     protected $attemptedAt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="mobile", type="integer")
+     */
+    private $mobile;
 
     public function __construct() {
         parent::__construct();
@@ -130,5 +140,57 @@ class User extends BaseUser {
     public function getIsLogged() {
         return $this->isLogged;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Name
+     */
+    public function setName($name) {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
+
+    /**
+     * Set mobile
+     *
+     * @param integer $mobile
+     *
+     * @return User
+     */
+    public function setMobile($mobile) {
+        $this->mobile = $mobile;
+
+        return $this;
+    }
+
+    /**
+     * Get mobile
+     *
+     * @return integer
+     */
+    public function getMobile() {
+        return $this->mobile;
+    }
+
+//    public function getRoles() {
+//        parent::getRoles();
+//    }
+//
+//    public function hasRole($role) {
+//        parent::hasRole($role);
+//    }
 
 }

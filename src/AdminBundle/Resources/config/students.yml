@@ -1,0 +1,19 @@
+add_multiple_form_for_students:
+    pattern: /generate-form
+    defaults: { _controller: "AdminBundle:Students:studentsGenerateMultipleForm" }
+
+list_students_details:
+    pattern: /list
+    defaults: { _controller: "AdminBundle:Students:studentsDetailsList" }
+
+list_student_details_table:
+    pattern: /details-table
+    defaults: { _controller: "AdminBundle:Students:studentsDetailsTable" }
+
+edit_student_details:
+    pattern: /edit/{guId}
+    defaults: { _controller: "AdminBundle:Students:studentsDetailsEdit" }
+
+add_students_import_from_csv:
+    pattern: /upload/csv
+    defaults: { _controller: "AdminBundle:Students:ulpoadCsvForm" }

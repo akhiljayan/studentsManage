@@ -4,8 +4,6 @@ namespace AdminBundle\Controller;
 
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AkjnBundle\Forms\LoginForm;
-use AkjnBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use TomJerryBundle\Interfaces\AuditableControllerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,6 +19,8 @@ class DefaultController extends Controller {
                 return $this->render('AdminBundle:MainAdmin:index.html.twig');
             } elseif ($user->hasRole('ROLE_SM_ADMIN')) {
                 return $this->render('AdminBundle:MainAdmin:index.html.twig');
+            }else{
+                return $this->render('AdminBundle:MainAdmin:indexUser.html.twig');
             }
         } else {
             return $this->generateUrl("_logout");
@@ -63,6 +63,46 @@ class DefaultController extends Controller {
             return $this->render('AdminBundle:MainAdmin/ClassRooms:manageClasses.html.twig');
         }
         return new JsonResponse($this->renderView('AdminBundle:MainAdmin/ClassRooms:addClassForm.html.twig', array('form' => $form->createView())));
+    }
+    
+    
+    
+    public function mastersDivisionAction() {
+        return $this->render('AdminBundle:MainAdmin/Division:manageDivision.html.twig');
+    }
+
+    public function mastersDivisionListAction() {
+        $em = $this->getDoctrine()->getManager();
+        $division = $em->getRepository("AdminBundle:Division")->findBy(array(), array('division' => 'ASC'));
+        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Division:listDivision.html.twig', array("division" => $division)));
+    }
+
+    public function mastersDivisionAddNewAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $divEntity = new \AdminBundle\Entity\Division();
+        $divType = new \AdminBundle\Form\DivisionType();
+        $form = $this->createForm($divType, $divEntity, array("action" => $this->generateUrl("add_new_division_form")));
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->persist($divEntity);
+            $em->flush();
+            return $this->render('AdminBundle:MainAdmin/Division:manageDivision.html.twig');
+        }
+        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Division:addDivisionForm.html.twig', array('form' => $form->createView())));
+    }
+
+    public function mastersDivisionEditAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $divEntity = $em->getRepository("AdminBundle:Division")->findOneById($id);
+        $divType = new \AdminBundle\Form\DivisionType();
+        $form = $this->createForm($divType, $divEntity, array("action" => $this->generateUrl("edit_new_division_form", array('id' => $id))));
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $em->persist($divEntity);
+            $em->flush();
+            return $this->render('AdminBundle:MainAdmin/Division:manageDivision.html.twig');
+        }
+        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Division:addDivisionForm.html.twig', array('form' => $form->createView())));
     }
 
 }

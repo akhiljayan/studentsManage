@@ -1,0 +1,11 @@
+students_attendence_manage:
+    pattern: /
+    defaults: { _controller: "AdminBundle:Attendence:studentsAttendenceManage" }
+    
+list_student_attendence_table:
+    pattern: /list-attendence
+    defaults: { _controller: "AdminBundle:Attendence:listStudentAttendence" }
+    
+absent_present_student:
+    pattern: /{id}/{attendence}/present-absent
+    defaults: { _controller: "AdminBundle:Attendence:absentPresentStudent" }

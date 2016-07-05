@@ -9,3 +9,11 @@ _index:
 masters:
     resource: "masters.yml"
     prefix:  /masters
+    
+students:
+    resource: "students.yml"
+    prefix:  /students
+    
+attendence:
+    resource: "attendence.yml"
+    prefix:  /attendence

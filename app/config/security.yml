@@ -3,8 +3,8 @@ security:
         AkjnBundle\Entity\User:
             id: security.encoder.securedlogin
     role_hierarchy:
-        ROLE_SM_PARENT: [ROLE_SM_USER]
-        ROLE_SM_TRACHER: [ROLE_SM_ADMIN]
+        ROLE_SM_USER: [ROLE_SM_USER]
+        ROLE_SM_ADMIN: [ROLE_SM_ADMIN]
         ROLE_SM_SUPERUSER: [ROLE_SM_USER, ROLE_SM_ADMIN, ROLE_SM_SUPERUSER]
 
     providers:
@@ -50,5 +50,5 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/fyfi/, roles: [ROLE_FYFI_USER, ROLE_FYFI_ADMIN, ROLE_SUPER_ADMIN] }
-#        - { path: ^/schm/, roles: [ROLE_FYFI_USER, ROLE_FYFI_ADMIN, ROLE_SUPER_ADMIN] }
+        - { path: ^/panel/, roles: [ROLE_SM_ADMIN, ROLE_SM_SUPERUSER] }
+        - { path: ^/masters/, roles: [ROLE_SM_ADMIN, ROLE_SM_SUPERUSER] }

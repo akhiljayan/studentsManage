@@ -1,0 +1,24 @@
+{%if division|length > 0%}
+    <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:30%; margin-left: auto;margin-right: auto;">
+        <thead class=" bg-light-blue-gradient">
+            <tr>
+                <th>#</th>
+                <th style="text-align:center">Division</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for div in division %}
+                <tr id="{{div.id}}">
+                    <td>{{ loop.index }}</td>
+                    <td style="text-align:center">{{ div.division }}</td>
+                    <td style="text-align:center">
+                        <span class="label label-warning edit-division" id="edit-division" data-id="{{div.id}}" style=" cursor: pointer">Edit</span>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    <h4 class="alert alert-info"> There Records found </h4>
+{%endif%}

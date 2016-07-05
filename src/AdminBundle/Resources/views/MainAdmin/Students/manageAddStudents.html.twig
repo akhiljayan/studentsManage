@@ -1,0 +1,209 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'manageStudents' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            Add Students
+            <small>Masters</small>
+            <a href="javascript:void(0);" id="import-from-exel" class="btn btn-sm btn-default">Import from CSV</a>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            <li class="active">Add Students</li>
+        </ol>
+    </section>
+    {{ form_start(form) }}
+    <section class="content">
+        <div class="row">
+            <div class="panel panel-primary" style="margin: 0 15px 15px 15px;">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            {{form_label(form.class)}}
+                            {{form_widget(form.class)}}
+                        </div>
+                        <div class="col-md-3">
+                            {{form_label(form.division)}}
+                            {{form_widget(form.division)}}
+                        </div>
+                        <div class="col-md-3">
+                            {{form_label(form.numberOfStudents)}}
+                            {{form_widget(form.numberOfStudents)}}
+                        </div>
+                        <div class='col-md-3'>
+                            <span class='btn btn-success pull-right' style='margin-top:7%' id='generate-form-table'>Add</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"  style="padding-right:15px; max-height: 1000px; overflow-y:auto" id="list-class-table">
+            {#Table put here#}
+        </div>
+        <div class="row">
+            <div class="pull-right hide" id="master-reset" style="padding-right:15px">
+                <span class="btn btn-danger form-control" id="reset-all">Reset</span>
+            </div>
+            <div class="pull-right hide" id="master-save" style="padding-right:15px">
+                {{form_row(form.save)}}
+            </div>
+        </div>
+    </section>
+    {{ form_end(form) }}
+
+    <div class="modal fade" id="add-class-room-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="csv-upload-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content-upload">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#import-from-exel").click(function () {
+                var $path = "{{path('add_students_import_from_csv')}}";
+                $.ajax({
+                    type: "POST",
+                    url: $path,
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        $("#modal-content-upload").html($data);
+                        $("#csv-upload-modal").modal("show");
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+
+            $("input").keypress(function (e) {
+                if (e.keyCode === 10 || e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            });
+
+            $("form").submit(function (e) {
+                $.each($(".student-input"), function () {
+                    if ($(this).val().length === 0) {
+                        e.preventDefault();
+                        $(this).notify(
+                                "Field left empty",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
+                });
+                $.each($(".dob"), function () {
+                    if($(this).val().substring(0,2)>31 || $(this).val().substring(3,5)>12){
+                        e.preventDefault();
+                        $(this).notify(
+                                "Date entered is greater than 30 or month value is greater than 12",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
+                    if($(this).val().length !== 10){
+                        e.preventDefault();
+                        $(this).notify(
+                                "Expected format is dd-mm-yyy",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
+                    if($(this).val().substring(2,3)!=='-' || $(this).val().substring(5,6)!=='-'){
+                        e.preventDefault();
+                        $(this).notify(
+                                "Expected format is dd-mm-yyy",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
+                });
+            });
+
+            $("#reset-all").click(function () {
+                $(".student-input").val("");
+            });
+
+            $("#generate-form-table").click(function () {
+                var numStu = $("#{{form.numberOfStudents.vars.id}}").val();
+                var $path = "{{path('add_multiple_form_for_students')}}";
+                $.ajax({
+                    type: "POST",
+                    url: $path,
+                    data: {'numStu': numStu},
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        $("#list-class-table").html($data['view']);
+                        if ($data['numb']) {
+                            if ($data['numb'] === "0") {
+                            } else {
+                                $("#master-save").removeClass("hide");
+                                $("#master-reset").removeClass("hide");
+                            }
+                        }
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+
+            $("#{{form.numberOfStudents.vars.id}}").keypress(function (e) {
+                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                    $(this).notify(
+                            "Digits Only",
+                            {position: "top"},
+                            "danger"
+                            );
+                    return false;
+                }
+            });
+
+            $("body").on('keypress', '.mobile-number', function (e) {
+                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                    $(this).notify(
+                            "Digits Only",
+                            {position: "top"},
+                            "danger"
+                            );
+                    return false;
+                }
+            });
+
+
+        });
+    </script>
+{% endblock %}

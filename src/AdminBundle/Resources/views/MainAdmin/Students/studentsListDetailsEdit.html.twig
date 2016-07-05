@@ -1,0 +1,97 @@
+{{ form_start(form) }}
+<div class="modal-header">
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button">
+        <span aria-hidden="true">×</span></button>
+    <h4 class="modal-title">Edit Student Details</h4>
+</div>
+<div class="modal-body" style="height:330px">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.class) }}</div>
+                <div class="col-md-7">{{ form_widget(form.class) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.division) }}</div>
+                <div class="col-md-7">{{ form_widget(form.division) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:10px"></div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.admissionNumber) }}</div>
+                <div class="col-md-7">{{ form_widget(form.admissionNumber) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.studentsName) }}</div>
+                <div class="col-md-7">{{ form_widget(form.studentsName) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:10px"></div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.gender) }}</div>
+                <div class="col-md-7">{{ form_widget(form.gender) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.fathersName) }}</div>
+                <div class="col-md-7">{{ form_widget(form.fathersName) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:10px"></div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.mothersName) }}</div>
+                <div class="col-md-7">{{ form_widget(form.mothersName) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.parentsMobNumber) }}</div>
+                <div class="col-md-7">{{ form_widget(form.parentsMobNumber) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:10px"></div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.landPhoneNumber) }}</div>
+                <div class="col-md-7">{{ form_widget(form.landPhoneNumber) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.parentsEMail) }}</div>
+                <div class="col-md-7">{{ form_widget(form.parentsEMail) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:20px"></div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="col-md-5">{{ form_label(form.address) }}</div>
+                <div class="col-md-7">{{ form_widget(form.address) }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="height:20px"></div>
+</div>
+<div class="modal-footer">
+    <button data-dismiss="modal" class="btn btn-outline pull-left" type="button">Close</button>
+    {{ form_row(form.save) }}
+</div>
+{{ form_end(form) }}

@@ -9,6 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class UserType extends AbstractType {
+    
+    private $superRole;
+
+    public function __construct($superRole) {
+        $this->superRole = $superRole;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -37,6 +43,22 @@ class UserType extends AbstractType {
             'required' => false, 
             'mapped' => false,
             'attr' => array('class' => 'vd_mobile_required  registration-input', 'maxlength' => 10)));
+        
+        if ($this->superRole) {
+            $builder->add('role', 'choice', array(
+                'choices' => array(''=>'--Select A Role--','ROLE_SM_SUPERUSER' => 'Superuser', 'ROLE_SM_ADMIN' => 'Admin', 'ROLE_SM_USER' => 'Normal User'),
+                'label' => 'User Role',
+                'attr' => array('class' => 'form-control'),
+                'mapped' => false,
+            ));
+        } else {
+            $builder->add('role', 'choice', array(
+                'choices' => array(''=>'--Select A Role--','ROLE_SM_ADMIN' => 'Admin', 'ROLE_SM_USER' => 'Normal User'),
+                'label' => 'User Role',
+                'attr' => array('class' => 'form-control'),
+                'mapped' => false,
+            ));
+        }
         
         $builder->add('password', 'repeated', array(
             'type' => 'password',

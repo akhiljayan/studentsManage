@@ -1,0 +1,139 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'userManagement' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            User Management
+            <small>Masters</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            <li class="active">User Management</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="pull-right" style="padding-right:15px">
+                <a class="btn btn-success" id="add-new-user">Add New User</a>
+            </div>
+        </div>
+        <div class="row"  style="padding-right:15px" id="list-users-table">
+            {#Table put here#}
+        </div>
+    </section>
+
+    <div class="modal fade" id="add-user-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var loadPath = "{{path('list_added_users')}}";
+            __loadPage(loadPath);
+
+
+            $("body").on('change', ".onoffswitch-checkbox", function () {
+                var id = $(this).data("id");
+                var path = "{{path('enable_disable_user',{'id':'__id__'})}}";
+                path = path.replace('__id__', id);
+                if ($(this).prop('checked')) {
+                    var flag = "on";
+                } else {
+                    var flag = "off";
+                }
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: {'flag': flag},
+                    beforeSend: function () {
+                    },
+                    success: function ($data) {
+                        if ($data) {
+                        }
+                    },
+                    complete: function () {
+                    }
+                });
+            });
+
+
+            $("#add-new-user").click(function () {
+                var $path = "{{path('add_new_user_form')}}";
+                $.ajax({
+                    type: "POST",
+                    url: $path,
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        $("#user_password_second").addClass("form-control");
+                        $("#user_password_first").addClass("form-control");
+                        $("#modal-content").html($data);
+                        $("#add-user-modal").modal('show');
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+
+            $("body").on('keypress', '.mobile-number', function (e) {
+                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                    $(this).notify(
+                            "Digits Only",
+                            {position: "top"},
+                            "danger"
+                            );
+                    return false;
+                }
+            });
+
+            $("body").on('submit', '#registration-form', function (e) {
+                var pass1 = $("#user_password_first").val();
+                var pass2 = $("#user_password_second").val();
+                if(pass1 === pass2){
+                    $(this).submit();
+                }else{
+                    e.preventDefault();
+                    alert("both passwords must be same");
+                }
+            });
+
+            function __loadPage(path) {
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    beforeSend: function () {
+                        $("#list-users-table").append('<div class="overlay"></div><div class="loading-img"></div>');
+                    },
+                    success: function (data) {
+                        $("#list-users-table").html(data);
+                    },
+                    complete: function () {
+                        $("#list-users-table").find(".overlay, .loading-img").remove();
+                    }
+
+                });
+            }
+
+        });
+    </script>
+{% endblock %}

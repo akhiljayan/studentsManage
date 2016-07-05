@@ -147,19 +147,19 @@ class StudentsController extends Controller {
 
     public function ulpoadCsvFormAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $cmd = $em->getClassMetadata("AdminBundle:MasterStudents");
-        $connection = $em->getConnection();
-        $dbPlatform = $connection->getDatabasePlatform();
-        $connection->beginTransaction();
-        try {
-            $connection->query('SET FOREIGN_KEY_CHECKS=0');
-            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
-            $connection->executeUpdate($q);
-            $connection->query('SET FOREIGN_KEY_CHECKS=1');
-            $connection->commit();
-        } catch (\Exception $e) {
-            $connection->rollback();
-        }
+//        $cmd = $em->getClassMetadata("AdminBundle:MasterStudents");
+//        $connection = $em->getConnection();
+//        $dbPlatform = $connection->getDatabasePlatform();
+//        $connection->beginTransaction();
+//        try {
+//            $connection->query('SET FOREIGN_KEY_CHECKS=0');
+//            $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
+//            $connection->executeUpdate($q);
+//            $connection->query('SET FOREIGN_KEY_CHECKS=1');
+//            $connection->commit();
+//        } catch (\Exception $e) {
+//            $connection->rollback();
+//        }
         $form = $this->createFormBuilder()
                 ->setAction($this->generateUrl('add_students_import_from_csv'))
                 ->setMethod("POST")

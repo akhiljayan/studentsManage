@@ -68,7 +68,7 @@ class AttendenceController extends Controller {
                         ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                         ->getQuery()
                         ->getResult();
-                return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails,'attendenceTable'=>$attendenceTableInClass)));
+                return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
             } else {
                 $entityName = '\AdminBundle\Entity\\' . $attendenceTableInClass;
                 foreach ($students as $student) {
@@ -79,7 +79,19 @@ class AttendenceController extends Controller {
                     $em->persist($attendenceEntity);
                 }
                 $em->flush();
-                $this->selectAttendenceDataAfterPersist($attendenceTableInClass, $dateTime, $class, $division);
+//                $this->selectAttendenceDataAfterPersist($attendenceTableInClass, $dateTime, $class, $division);
+                $qb = $em->createQueryBuilder();
+                $attendenceDetails = $qb->select('a')
+                        ->from('AdminBundle:' . $attendenceTableInClass . '', 'a')
+                        ->innerJoin('AdminBundle:MasterStudents', 's', 'WITH', 'a.student = s.id')
+                        ->where('a.date = :date')
+                        ->andWhere('s.class = :class')
+                        ->andWhere('s.division = :division')
+                        ->orderBy('s.studentsName', 'ASC')
+                        ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
+                        ->getQuery()
+                        ->getResult();
+                return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
             }
         } else {
             return new JsonResponse('<h4 class="alert alert-info"> DB Error please contact administrator !!! </h4>');
@@ -99,16 +111,16 @@ class AttendenceController extends Controller {
                 ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                 ->getQuery()
                 ->getResult();
-        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable'=>$attendenceTableInClass)));
+        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
     }
-    
-    public function absentPresentStudentAction(Request $request,$id,$attendence){
+
+    public function absentPresentStudentAction(Request $request, $id, $attendence) {
         $em = $this->getDoctrine()->getManager();
         $flag = $request->request->get('flag');
         $atendence = $em->getRepository("AdminBundle:" . $attendence . "")->findOneById($id);
-        if($flag == 'on'){
+        if ($flag == 'on') {
             $atendence->setAttendence(true);
-        }else{
+        } else {
             $atendence->setAttendence(false);
         }
         $em->persist($atendence);

@@ -19,9 +19,10 @@ class MasterStudentsType extends AbstractType {
             'label' => 'Address'
         ));
         $builder->add('landPhoneNumber', 'text', array(
-            'attr' => array('class' => 'form-control'),
+            'attr' => array('class' => 'form-control','size' => '10'),
             'required' => false,
-            'label' => 'Land Phone Number'
+            'label' => 'Land Phone Number',
+            'max_length' => '10'
         ));
         $builder->add('parentsEMail', 'text', array(
             'attr' => array('class' => 'form-control'),
@@ -46,7 +47,8 @@ class MasterStudentsType extends AbstractType {
         ));
         $builder->add('parentsMobNumber', 'text', array(
             'attr' => array('class' => 'form-control'),
-            'label' => 'Parents Mobile No'
+            'label' => 'Parents Mobile No',
+            'max_length' => 10
         ));
         $builder->add('class', 'entity', array(
             'class' => 'AdminBundle:ClassRoom',

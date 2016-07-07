@@ -66,28 +66,46 @@
         $(document).ready(function () {
 
             $("#list-student-for-attendence").click(function () {
-                var date = $("#{{form.date.vars.id}}").val();
-                var classId = $("#{{form.class.vars.id}}").val();
-                var division = $("#{{form.division.vars.id}}").val();
-                var $path = "{{path('list_student_attendence_table')}}";
-                $.ajax({
-                    type: "POST",
-                    url: $path,
-                    data: {'classId': classId, 'division': division, 'date': date},
-                    context: this,
-                    beforeSend: function () {
-                        $(this).after(imgLoading);
-                    },
-                    success: function ($data) {
-                        $("#list-student-table").html($data);
-                    },
-                    complete: function () {
-                        $(this).next(".loading-img").remove();
+                if ($("#{{form.class.vars.id}}").val().length === 0) {
+                    $("#{{form.class.vars.id}}").notify(
+                            "Field left empty",
+                            {position: "top"},
+                            "danger"
+                            );
+                    return false;
+                } else {
+                    if ($("#{{form.division.vars.id}}").val().length === 0) {
+                        $("#{{form.division.vars.id}}").notify(
+                                "Field left empty",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    } else {
+                        var date = $("#{{form.date.vars.id}}").val();
+                        var classId = $("#{{form.class.vars.id}}").val();
+                        var division = $("#{{form.division.vars.id}}").val();
+                        var $path = "{{path('list_student_attendence_table')}}";
+                        $.ajax({
+                            type: "POST",
+                            url: $path,
+                            data: {'classId': classId, 'division': division, 'date': date},
+                            context: this,
+                            beforeSend: function () {
+                                $(this).after(imgLoading);
+                            },
+                            success: function ($data) {
+                                $("#list-student-table").html($data);
+                            },
+                            complete: function () {
+                                $(this).next(".loading-img").remove();
+                            }
+                        });
                     }
-                });
+                }
             });
 
-            $("body").on('change', ".onoffswitch-checkbox", function () {
+            $("body").on('change', ".onofequalencpt589A879", function () {
                 var id = $(this).data("id");
                 var attendence = $(this).data("attendence");
                 var path = "{{path('absent_present_student',{'id':'__id__','attendence':'__attendence__'})}}";

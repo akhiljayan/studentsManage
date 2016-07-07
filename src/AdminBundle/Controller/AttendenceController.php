@@ -48,53 +48,64 @@ class AttendenceController extends Controller {
         $division = $request->request->get('division');
         $date = $request->request->get('date');
         $dateTime = new \DateTime($date);
+        $today = new \DateTime("now");
 
         $students = $em->getRepository("AdminBundle:MasterStudents")->findBy(array("class" => $class, 'division' => $division));
         $classObj = $em->getRepository("AdminBundle:ClassRoom")->findOneById($class);
         $attendenceTableInClass = $classObj->getClassAttendenceTable();
 
         if ($attendenceTableInClass) {
-            $atendenceTableName = $em->getRepository("AdminBundle:" . $attendenceTableInClass . "")->findBy(array('date' => $dateTime));
-            if ($atendenceTableName) {
-                $em = $this->getDoctrine()->getManager();
-                $qb = $em->createQueryBuilder();
-                $attendenceDetails = $qb->select('a')
-                        ->from('AdminBundle:' . $attendenceTableInClass . '', 'a')
-                        ->innerJoin('AdminBundle:MasterStudents', 's', 'WITH', 'a.student = s.id')
-                        ->where('a.date = :date')
-                        ->andWhere('s.class = :class')
-                        ->andWhere('s.division = :division')
-                        ->orderBy('s.studentsName', 'ASC')
-                        ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
-                        ->getQuery()
-                        ->getResult();
-                return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
-            } else {
-                $entityName = '\AdminBundle\Entity\\' . $attendenceTableInClass;
-                foreach ($students as $student) {
-                    $attendenceEntity = $em->getClassMetadata($entityName)->newInstance();
-                    $attendenceEntity->setStudent($student);
-                    $attendenceEntity->setDate($dateTime);
-                    $attendenceEntity->setAttendence(true);
-                    $em->persist($attendenceEntity);
+            if ($dateTime <= $today || $dateTime->format('dd-mm-yyy') == $today->format('dd-mm-yyy')) {
+                if ($dateTime->format('dd-mm-yyy') == $today->format('dd-mm-yyy')) {
+                    $dateFlag = "equal";
+                } else {
+                    $dateFlag = "less";
                 }
-                $em->flush();
+
+                $atendenceTableName = $em->getRepository("AdminBundle:" . $attendenceTableInClass . "")->findBy(array('date' => $dateTime));
+                if ($atendenceTableName) {
+                    $em = $this->getDoctrine()->getManager();
+                    $qb = $em->createQueryBuilder();
+                    $attendenceDetails = $qb->select('a')
+                            ->from('AdminBundle:' . $attendenceTableInClass . '', 'a')
+                            ->innerJoin('AdminBundle:MasterStudents', 's', 'WITH', 'a.student = s.id')
+                            ->where('a.date = :date')
+                            ->andWhere('s.class = :class')
+                            ->andWhere('s.division = :division')
+                            ->orderBy('s.studentsName', 'ASC')
+                            ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
+                            ->getQuery()
+                            ->getResult();
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag)));
+                } else {
+                    $entityName = '\AdminBundle\Entity\\' . $attendenceTableInClass;
+                    foreach ($students as $student) {
+                        $attendenceEntity = $em->getClassMetadata($entityName)->newInstance();
+                        $attendenceEntity->setStudent($student);
+                        $attendenceEntity->setDate($dateTime);
+                        $attendenceEntity->setAttendence(true);
+                        $em->persist($attendenceEntity);
+                    }
+                    $em->flush();
 //                $this->selectAttendenceDataAfterPersist($attendenceTableInClass, $dateTime, $class, $division);
-                $qb = $em->createQueryBuilder();
-                $attendenceDetails = $qb->select('a')
-                        ->from('AdminBundle:' . $attendenceTableInClass . '', 'a')
-                        ->innerJoin('AdminBundle:MasterStudents', 's', 'WITH', 'a.student = s.id')
-                        ->where('a.date = :date')
-                        ->andWhere('s.class = :class')
-                        ->andWhere('s.division = :division')
-                        ->orderBy('s.studentsName', 'ASC')
-                        ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
-                        ->getQuery()
-                        ->getResult();
-                return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
+                    $qb = $em->createQueryBuilder();
+                    $attendenceDetails = $qb->select('a')
+                            ->from('AdminBundle:' . $attendenceTableInClass . '', 'a')
+                            ->innerJoin('AdminBundle:MasterStudents', 's', 'WITH', 'a.student = s.id')
+                            ->where('a.date = :date')
+                            ->andWhere('s.class = :class')
+                            ->andWhere('s.division = :division')
+                            ->orderBy('s.studentsName', 'ASC')
+                            ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
+                            ->getQuery()
+                            ->getResult();
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag)));
+                }
+            } else {
+                return new JsonResponse('<h4 class="alert alert-danger"> Cannot select future date for adding attendence !!! </h4>');
             }
         } else {
-            return new JsonResponse('<h4 class="alert alert-info"> DB Error please contact administrator !!! </h4>');
+            return new JsonResponse('<h4 class="alert alert-info"> Attendence Facility not activated for this class. Please contact administrator to activate !!! </h4>');
         }
     }
 

@@ -81,6 +81,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("body").delegate(".dob", "focusin", function () {
+                $(this).datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showButtonPanel: true,
+                    yearRange: "-100:+0"
+                });
+            });
 
             $("#import-from-exel").click(function () {
                 var $path = "{{path('add_students_import_from_csv')}}";
@@ -119,35 +128,6 @@
                         return false;
                     }
                 });
-                $.each($(".dob"), function () {
-                    if($(this).val().substring(0,2)>31 || $(this).val().substring(3,5)>12){
-                        e.preventDefault();
-                        $(this).notify(
-                                "Date entered is greater than 30 or month value is greater than 12",
-                                {position: "top"},
-                                "danger"
-                                );
-                        return false;
-                    }
-                    if($(this).val().length !== 10){
-                        e.preventDefault();
-                        $(this).notify(
-                                "Expected format is dd-mm-yyy",
-                                {position: "top"},
-                                "danger"
-                                );
-                        return false;
-                    }
-                    if($(this).val().substring(2,3)!=='-' || $(this).val().substring(5,6)!=='-'){
-                        e.preventDefault();
-                        $(this).notify(
-                                "Expected format is dd-mm-yyy",
-                                {position: "top"},
-                                "danger"
-                                );
-                        return false;
-                    }
-                });
             });
 
             $("#reset-all").click(function () {
@@ -155,55 +135,66 @@
             });
 
             $("#generate-form-table").click(function () {
-                var numStu = $("#{{form.numberOfStudents.vars.id}}").val();
-                var $path = "{{path('add_multiple_form_for_students')}}";
-                $.ajax({
-                    type: "POST",
-                    url: $path,
-                    data: {'numStu': numStu},
-                    context: this,
-                    beforeSend: function () {
-                        $(this).after(imgLoading);
-                    },
-                    success: function ($data) {
-                        $("#list-class-table").html($data['view']);
-                        if ($data['numb']) {
-                            if ($data['numb'] === "0") {
-                            } else {
-                                $("#master-save").removeClass("hide");
-                                $("#master-reset").removeClass("hide");
-                            }
-                        }
-                    },
-                    complete: function () {
-                        $(this).next(".loading-img").remove();
-                    }
-                });
-            });
-
-            $("#{{form.numberOfStudents.vars.id}}").keypress(function (e) {
-                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
-                    $(this).notify(
-                            "Digits Only",
+                if ($("#{{form.numberOfStudents.vars.id}}").val() > 90) {
+                    $("#{{form.numberOfStudents.vars.id}}").notify(
+                            "cannot enter more than 90 students at a time. Plese use CSV import",
                             {position: "top"},
                             "danger"
                             );
                     return false;
+                } else {
+                    var numStu = $("#{{form.numberOfStudents.vars.id}}").val();
+                    var $path = "{{path('add_multiple_form_for_students')}}";
+                    $.ajax({
+                        type: "POST",
+                        url: $path,
+                        data: {'numStu': numStu},
+                        context: this,
+                        beforeSend: function () {
+                            $(this).after(imgLoading);
+                        },
+                        success: function ($data) {
+                            $("#list-class-table").html($data['view']);
+                            if ($data['numb']) {
+                                if ($data['numb'] === "0") {
+                                } else {
+                                    $("#master-save").removeClass("hide");
+                                    $("#master-reset").removeClass("hide");
+                                }
+                            }
+                        },
+                        complete: function () {
+                            $(this).next(".loading-img").remove();
+                        }
+                    });
+                }
+            });
+
+            $("#{{form.numberOfStudents.vars.id}}").keypress(function (e) {
+                if (e.which !== 8) {
+                    if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                        $(this).notify(
+                                "Digits Only",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
                 }
             });
 
             $("body").on('keypress', '.mobile-number', function (e) {
-                if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
-                    $(this).notify(
-                            "Digits Only",
-                            {position: "top"},
-                            "danger"
-                            );
-                    return false;
+                if (e.which !== 8) {
+                    if (e.which !== 8 && e.which !== 0 && (e.which < 48 || e.which > 57)) {
+                        $(this).notify(
+                                "Digits Only",
+                                {position: "top"},
+                                "danger"
+                                );
+                        return false;
+                    }
                 }
             });
-
-
         });
     </script>
 {% endblock %}

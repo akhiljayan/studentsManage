@@ -57,6 +57,9 @@ class StudentsController extends Controller {
                 $mobileNumber = $_POST['mobile_number_' . $i];
                 $gender = $_POST['gender_' . $i];
                 $dob = $_POST['dob_' . $i];
+                
+//                var_dump($mobileNumber);
+//                die;
 
                 $student = new \AdminBundle\Entity\MasterStudents();
                 $student->setStudentsName($studentsName);

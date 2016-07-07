@@ -61,25 +61,47 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ attendenceDetail.student.studentsName }}</td>
                     <td>{{ attendenceDetail.student.admissionNumber }}</td>
-                    <td style="text-align:center">
-                        {%if attendenceDetail.attendence %}
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" checked>
-                                <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
-                                    <span class="onoffswitch-inner"></span>
-                                    <span class="onoffswitch-switch"></span>
-                                </label>
-                            </div>
-                        {%else%}
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" >
-                                <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
-                                    <span class="onoffswitch-inner"></span>
-                                    <span class="onoffswitch-switch"></span>
-                                </label>
-                            </div>
-                        {%endif%}
-                    </td>
+                    {%if dateFlag == 'equal'%}
+                        <td style="text-align:center">
+                            {%if attendenceDetail.attendence %}
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox onofequalencpt589A879" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" checked>
+                                    <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            {%else%}
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox onofequalencpt589A879" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" >
+                                    <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            {%endif%}
+                        </td>
+                    {%else%}
+                        <td style="text-align:center">
+                            {%if attendenceDetail.attendence %}
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}" checked  disabled>
+                                    <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            {%else%}
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" data-id="{{attendenceDetail.id}}" data-attendence="{{attendenceTable}}" id="myonoffswitch-{{attendenceDetail.id}}"  disabled>
+                                    <label class="onoffswitch-label" for="myonoffswitch-{{attendenceDetail.id}}">
+                                        <span class="onoffswitch-inner"></span>
+                                        <span class="onoffswitch-switch"></span>
+                                    </label>
+                                </div>
+                            {%endif%}
+                        </td>
+                    {%endif%}
                 </tr>
             {% endfor %}
         </tbody>

@@ -83,16 +83,16 @@ class MasterStudents
     private $mothersName;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="parentsMobNumber", type="integer")
+     * @ORM\Column(name="parentsMobNumber", type="string", length=10)
      */
     private $parentsMobNumber;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="landPhoneNumber", type="integer", nullable=true)
+     * @ORM\Column(name="landPhoneNumber", type="string", length=10, nullable=true)
      */
     private $landPhoneNumber;
 
@@ -113,6 +113,7 @@ class MasterStudents
     public function __construct() {
         $this->guId = md5(uniqid(php_uname('n')));
     }
+
 
 
     /**
@@ -198,6 +199,30 @@ class MasterStudents
     }
 
     /**
+     * Set gender
+     *
+     * @param string $gender
+     *
+     * @return MasterStudents
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
      * Set address
      *
      * @param string $address
@@ -272,7 +297,7 @@ class MasterStudents
     /**
      * Set parentsMobNumber
      *
-     * @param integer $parentsMobNumber
+     * @param string $parentsMobNumber
      *
      * @return MasterStudents
      */
@@ -286,7 +311,7 @@ class MasterStudents
     /**
      * Get parentsMobNumber
      *
-     * @return integer
+     * @return string
      */
     public function getParentsMobNumber()
     {
@@ -296,7 +321,7 @@ class MasterStudents
     /**
      * Set landPhoneNumber
      *
-     * @param integer $landPhoneNumber
+     * @param string $landPhoneNumber
      *
      * @return MasterStudents
      */
@@ -310,7 +335,7 @@ class MasterStudents
     /**
      * Get landPhoneNumber
      *
-     * @return integer
+     * @return string
      */
     public function getLandPhoneNumber()
     {
@@ -339,6 +364,30 @@ class MasterStudents
     public function getParentsEMail()
     {
         return $this->parentsEMail;
+    }
+
+    /**
+     * Set dob
+     *
+     * @param \DateTime $dob
+     *
+     * @return MasterStudents
+     */
+    public function setDob($dob)
+    {
+        $this->dob = $dob;
+
+        return $this;
+    }
+
+    /**
+     * Get dob
+     *
+     * @return \DateTime
+     */
+    public function getDob()
+    {
+        return $this->dob;
     }
 
     /**
@@ -387,53 +436,5 @@ class MasterStudents
     public function getDivision()
     {
         return $this->division;
-    }
-
-    /**
-     * Set gender
-     *
-     * @param string $gender
-     *
-     * @return MasterStudents
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    /**
-     * Get gender
-     *
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    /**
-     * Set dob
-     *
-     * @param \DateTime $dob
-     *
-     * @return MasterStudents
-     */
-    public function setDob($dob)
-    {
-        $this->dob = $dob;
-
-        return $this;
-    }
-
-    /**
-     * Get dob
-     *
-     * @return \DateTime
-     */
-    public function getDob()
-    {
-        return $this->dob;
     }
 }

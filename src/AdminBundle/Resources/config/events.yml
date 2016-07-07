@@ -1,0 +1,7 @@
+event_notification_to_all:
+    pattern: /to-all
+    defaults: { _controller: "AdminBundle:Events:eventNotificationToAll" }
+    
+event_notification_limited:
+    pattern: /limited
+    defaults: { _controller: "AdminBundle:Events:eventNotificationLimited" }

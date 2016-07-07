@@ -161,8 +161,8 @@
             <section class="sidebar">
                 <ul class="sidebar-menu">
                     <a href="{{path('_index')}}"><li class="header">MAIN NAVIGATION</li></a>
-                        {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
-                            {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision'%}
+                            {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
+                                {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision'%}
                             <li class="active treeview">
                                 <a href="{{path('_index')}}">
                                     <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
@@ -233,6 +233,33 @@
                                 <a href="{{path('user_management')}}"><i class="fa fa-users"></i> <span>User Management</span></a>
                             </li>
                         {%endif%}
+                    {%endif%}
+
+                    {%if flag == 'notificationToAll' or flag == 'notificationSelectedClass'%}
+                        <li class="active treeview">
+                            <a href="{{path('_index')}}">
+                                <i class="fa fa-dashboard"></i> <span>Events</span> <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                    {%if flag == 'notificationToAll'%}
+                                    <li class="active"><a href="javascript:void(0)"><i class="fa fa-circle-o text-red"></i>Notification to all</a></li>
+                                    <li><a href="{{path('event_notification_limited')}}"><i class="fa fa-circle-o"></i>Limited Notification</a></li>
+                                    {%else%}
+                                    <li><a href="{{path('event_notification_to_all')}}"><i class="fa fa-circle-o"></i>Notification to all</a></li>
+                                    <li class="active"><a href="javascript:void(0)"><i class="fa fa-circle-o text-red"></i>Limited Notification</a></li>
+                                    {%endif%}
+                            </ul>
+                        </li>
+                    {%else%}
+                        <li class="treeview">
+                            <a href="{{path('_index')}}">
+                                <i class="fa fa-dashboard"></i> <span>Events</span> <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{path('event_notification_to_all')}}"><i class="fa fa-circle-o"></i>Notification to all</a></li>
+                                <li><a href="{{path('event_notification_limited')}}"><i class="fa fa-circle-o"></i>Limited Notification</a></li>
+                            </ul>
+                        </li>
                     {%endif%}
 
 

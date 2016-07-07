@@ -17,3 +17,7 @@ students:
 attendence:
     resource: "attendence.yml"
     prefix:  /attendence
+    
+event_notification:
+    resource: "events.yml"
+    prefix:  /events

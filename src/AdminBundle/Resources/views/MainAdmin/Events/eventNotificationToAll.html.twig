@@ -1,0 +1,57 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'manageStudents' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+        .send-sms{
+            width:10%
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            Event Notification
+            <small>Sent Event notification SMS to all</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Events</a></li>
+            <li class="active">Notification to all</li>
+        </ol>
+    </section>
+    {{ form_start(form) }}
+    <section class="content">
+        <div class="row">
+            <div class="panel panel-primary" style="margin: 0 15px 15px 15px;">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        {{form_label(form.eventTitle)}}
+                        {{form_widget(form.eventTitle)}}
+                    </div>
+                    <div class="col-md-12" style="height:20px"></div>
+                    <div class="col-md-12">
+                        {{form_label(form.content)}}
+                        {{form_widget(form.content)}}
+                    </div>
+                    <div class="col-md-12" style="height:25px"></div>
+                    {{form_row(form.sendsms)}}
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+{% endblock %}

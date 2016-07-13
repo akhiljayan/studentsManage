@@ -9,3 +9,7 @@ list_student_attendence_table:
 absent_present_student:
     pattern: /{id}/{attendence}/present-absent
     defaults: { _controller: "AdminBundle:Attendence:absentPresentStudent" }
+    
+confirm_send_sms:
+    pattern: /confirm/send_sms
+    defaults: { _controller: "AdminBundle:Attendence:confirmSendSms" }

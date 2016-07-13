@@ -130,6 +130,27 @@
                     }
                 });
             });
+
+            $("body").on('click', '#confirm-send-sms', function () {
+                var datetime = $(this).data('date');
+                var attable = $(this).data('attable');
+                var path = "{{path('confirm_send_sms')}}";
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: {'date': datetime, 'attable': attable},
+                    beforeSend: function () {
+                    },
+                    success: function ($data) {
+                        if ($data) {
+                            alert("Messages were sent successfully !!!");
+                            location.reload();
+                        }
+                    },
+                    complete: function () {
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

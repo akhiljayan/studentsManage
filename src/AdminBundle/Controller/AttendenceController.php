@@ -76,7 +76,7 @@ class AttendenceController extends Controller {
                             ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                             ->getQuery()
                             ->getResult();
-                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag)));
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime)));
                 } else {
                     $entityName = '\AdminBundle\Entity\\' . $attendenceTableInClass;
                     foreach ($students as $student) {
@@ -84,6 +84,7 @@ class AttendenceController extends Controller {
                         $attendenceEntity->setStudent($student);
                         $attendenceEntity->setDate($dateTime);
                         $attendenceEntity->setAttendence(true);
+                        $attendenceEntity->setConfirmationFlag(false);
                         $em->persist($attendenceEntity);
                     }
                     $em->flush();
@@ -99,7 +100,7 @@ class AttendenceController extends Controller {
                             ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                             ->getQuery()
                             ->getResult();
-                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag)));
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime)));
                 }
             } else {
                 return new JsonResponse('<h4 class="alert alert-danger"> Cannot select future date for adding attendence !!! </h4>');
@@ -122,7 +123,7 @@ class AttendenceController extends Controller {
                 ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                 ->getQuery()
                 ->getResult();
-        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass)));
+        return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'datetime' => $dateTime)));
     }
 
     public function absentPresentStudentAction(Request $request, $id, $attendence) {
@@ -137,6 +138,48 @@ class AttendenceController extends Controller {
         $em->persist($atendence);
         $em->flush();
         return new JsonResponse(true);
+    }
+
+    public function confirmSendSmsAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $date = $request->request->get('date');
+        $attable = $request->request->get('attable');
+        $dateTime = new \DateTime($date);
+        $atendence = $em->getRepository("AdminBundle:" . $attable . "")->findBy(array('date' => $dateTime));
+        foreach ($atendence as $att) {
+            $att->setConfirmationFlag(true);
+            $em->persist($att);
+        }
+        $em->flush();
+
+        $absentees = $em->getRepository("AdminBundle:" . $attable . "")->findBy(array('date' => $dateTime, 'attendence' => false));
+        foreach ($absentees as $absent) {
+            $username = "kapmsg";
+            $pass = "kap@user!123";
+
+            $dest_mobileno = $absent->getParentsMobNumber();
+            if ($absent->getGender() == 'M') {
+                $sms = "For your kind information.. Your son" . $absent->getStudentsName() . " was absent in his class on the " . $date . "";
+            } else {
+                $sms = "For your kind information.. Your dauter" . $absent->getStudentsName() . " was absent in her class on the " . $date . "";
+            }
+            $senderid = "257147";
+
+            $postvars = "username=" . $username . "&password=" . $pass . "&senderid=" . $senderid . "&dest_mobileno=" . $dest_mobileno . "&message=" . $sms . "";
+
+            $url = sprintf("http://123.63.33.43/blank/sms/user/urlsmstemp.php?username=%s&pass=%s&senderid=%s&dest_mobileno=%s&message=%s&mtype=UNI&response=Y", $username, $pass, $senderid, $dest_mobileno, urlencode($sms));
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_TIMEOUT, '3');
+            $content = trim(curl_exec($ch));
+            curl_close($ch);
+        }
+
+        return true;
     }
 
 }

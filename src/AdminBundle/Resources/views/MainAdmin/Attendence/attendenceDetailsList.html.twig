@@ -61,7 +61,7 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ attendenceDetail.student.studentsName }}</td>
                     <td>{{ attendenceDetail.student.admissionNumber }}</td>
-                    {%if dateFlag == 'equal'%}
+                    {%if dateFlag == 'equal' or attendenceDetail.confirmationFlag%}
                         <td style="text-align:center">
                             {%if attendenceDetail.attendence %}
                                 <div class="onoffswitch">
@@ -106,6 +106,9 @@
             {% endfor %}
         </tbody>
     </table>
+    <div class="col-md-12">
+        <a href="javascript:void(0);" id="confirm-send-sms" class="btn btn-success pull-right" data-attable="{{attendenceTable}}" data-date="{{datetime|date('d-m-Y')}}">Confirm and send SMS to Parents</a>
+    </div>
 {%else%}
     <h4 class="alert alert-info"> There Records found </h4>
 {%endif%}

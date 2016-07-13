@@ -41,6 +41,13 @@ class twelfth_attendence
      */
     private $attendence;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="confirmationFlag", type="boolean")
+     */
+    private $confirmationFlag;
+
 
 
     /**
@@ -123,5 +130,29 @@ class twelfth_attendence
     public function getStudent()
     {
         return $this->student;
+    }
+
+    /**
+     * Set confirmationFlag
+     *
+     * @param boolean $confirmationFlag
+     *
+     * @return twelfth_attendence
+     */
+    public function setConfirmationFlag($confirmationFlag)
+    {
+        $this->confirmationFlag = $confirmationFlag;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationFlag
+     *
+     * @return boolean
+     */
+    public function getConfirmationFlag()
+    {
+        return $this->confirmationFlag;
     }
 }

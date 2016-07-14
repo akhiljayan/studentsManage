@@ -168,9 +168,9 @@ class AttendenceController extends Controller {
 
             $dest_mobileno = $absent->getStudent()->getParentsMobNumber();
             if ($absent->getStudent()->getGender() == 'M') {
-                $sms = "For your kind information.. Your son" . $absent->getStudent()->getStudentsName() . " was absent in his class on the " . $date . "";
+                $sms = "For your kind information.. Your son " . $absent->getStudent()->getStudentsName() . " was absent in his class on the " . $date . "";
             } else {
-                $sms = "For your kind information.. Your dauter" . $absent->getStudent()->getStudentsName() . " was absent in her class on the " . $date . "";
+                $sms = "For your kind information.. Your daughter " . $absent->getStudent()->getStudentsName() . " was absent in her class on the " . $date . "";
             }
             $senderid = "257147";
 

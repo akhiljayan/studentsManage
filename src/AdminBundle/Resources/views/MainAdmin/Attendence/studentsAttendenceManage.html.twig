@@ -140,6 +140,7 @@
                     url: path,
                     data: {'date': datetime, 'attable': attable},
                     beforeSend: function () {
+                        $(this).append('<div class="overlay"></div><div class="loading-img"></div>');
                     },
                     success: function ($data) {
                         if ($data) {

@@ -157,11 +157,11 @@ class AttendenceController extends Controller {
             $username = "kapmsg";
             $pass = "kap@user!123";
 
-            $dest_mobileno = $absent->getParentsMobNumber();
-            if ($absent->getGender() == 'M') {
-                $sms = "For your kind information.. Your son" . $absent->getStudentsName() . " was absent in his class on the " . $date . "";
+            $dest_mobileno = $absent->getStudent()->getParentsMobNumber();
+            if ($absent->getStudent()->getGender() == 'M') {
+                $sms = "For your kind information.. Your son" . $absent->getStudent()->getStudentsName() . " was absent in his class on the " . $date . "";
             } else {
-                $sms = "For your kind information.. Your dauter" . $absent->getStudentsName() . " was absent in her class on the " . $date . "";
+                $sms = "For your kind information.. Your dauter" . $absent->getStudent()->getStudentsName() . " was absent in her class on the " . $date . "";
             }
             $senderid = "257147";
 
@@ -179,7 +179,7 @@ class AttendenceController extends Controller {
             curl_close($ch);
         }
 
-        return true;
+        return new JsonResponse(true);
     }
 
 }

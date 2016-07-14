@@ -64,6 +64,14 @@ class AttendenceController extends Controller {
 
                 $atendenceTableName = $em->getRepository("AdminBundle:" . $attendenceTableInClass . "")->findBy(array('date' => $dateTime));
                 if ($atendenceTableName) {
+                    $check = $em->getRepository("AdminBundle:" . $attendenceTableInClass . "")->findOneBy(array('date' => $dateTime));
+                    $confirm = $check->getConfirmationFlag();
+                    if ($confirm == true) {
+                        $confirmFlag = true;
+                    } else {
+                        $confirmFlag = false;
+                    }
+
                     $em = $this->getDoctrine()->getManager();
                     $qb = $em->createQueryBuilder();
                     $attendenceDetails = $qb->select('a')
@@ -76,7 +84,7 @@ class AttendenceController extends Controller {
                             ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                             ->getQuery()
                             ->getResult();
-                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime)));
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime, 'confirmFlag' => $confirmFlag)));
                 } else {
                     $entityName = '\AdminBundle\Entity\\' . $attendenceTableInClass;
                     foreach ($students as $student) {
@@ -88,6 +96,7 @@ class AttendenceController extends Controller {
                         $em->persist($attendenceEntity);
                     }
                     $em->flush();
+                    $confirmFlag = false;
 //                $this->selectAttendenceDataAfterPersist($attendenceTableInClass, $dateTime, $class, $division);
                     $qb = $em->createQueryBuilder();
                     $attendenceDetails = $qb->select('a')
@@ -100,7 +109,7 @@ class AttendenceController extends Controller {
                             ->setParameters(array('date' => $dateTime, 'class' => $class, 'division' => $division))
                             ->getQuery()
                             ->getResult();
-                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime)));
+                    return new JsonResponse($this->renderView('AdminBundle:MainAdmin/Attendence:attendenceDetailsList.html.twig', array('attendenceDetails' => $attendenceDetails, 'attendenceTable' => $attendenceTableInClass, 'dateFlag' => $dateFlag, 'datetime' => $dateTime, 'confirmFlag' => $confirmFlag)));
                 }
             } else {
                 return new JsonResponse('<h4 class="alert alert-danger"> Cannot select future date for adding attendence !!! </h4>');

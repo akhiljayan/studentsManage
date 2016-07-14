@@ -57,6 +57,14 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="loading-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="width:70%">
+            <div class="modal-content-load" id="modal-content-load" >
+                <small>Sending message</small>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block mainPannelJs %}
@@ -140,7 +148,7 @@
                     url: path,
                     data: {'date': datetime, 'attable': attable},
                     beforeSend: function () {
-                        $(this).append('<div class="overlay"></div><div class="loading-img"></div>');
+                        $("loading-modal").modal("show");
                     },
                     success: function ($data) {
                         if ($data) {
@@ -149,7 +157,7 @@
                         }
                     },
                     complete: function () {
-                        $(this).find(".overlay, .loading-img").remove();
+                        $("loading-modal").modal("hide");
                     }
                 });
             });

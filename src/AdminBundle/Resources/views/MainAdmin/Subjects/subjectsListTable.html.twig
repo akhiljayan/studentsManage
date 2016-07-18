@@ -1,0 +1,32 @@
+{%if subjectsToPass|length > 0%}
+    <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:89%; margin-left: auto;margin-right: auto;">
+        <thead class=" bg-light-blue-gradient">
+            <tr>
+                <th>#</th>
+                <th>Subjects</th>
+                    {%if actionFlag == 'leftTable'%}
+                    <th>Action</th>
+                    {%endif%}
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subjectsToPass %}
+                <tr id="{{subject.id}}">
+                    <td>{{loop.index}}</td>
+                    <td>{{ subject.subjectName }}</td>
+                    {%if actionFlag == 'leftTable'%}
+                        <td style="text-align:center">
+                            <input type="checkbox" class="no-form-control master-sub-checkbox" value="{{subject.id}}" id="subject-{{subject.id}}">
+                        </td>
+                    {%endif%}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{%else%}
+    {%if actionFlag == 'leftTable'%}
+        <h4 class="alert alert-info"> There Subjects found in master</h4>
+    {%else%}
+        <h4 class="alert alert-info"> There Subjects added </h4>
+    {%endif%}
+{%endif%}

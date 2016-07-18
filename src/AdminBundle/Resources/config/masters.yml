@@ -49,4 +49,8 @@ enable_disable_user:
 add_new_user_form:
     pattern: /user/new/user/form
     defaults: { _controller: "AdminBundle:User:addNewUserForm" }
+    
+masters_add_subjects:
+    pattern: /subjects
+    defaults: { _controller: "AdminBundle:Subjects:manageSubjects" }
 

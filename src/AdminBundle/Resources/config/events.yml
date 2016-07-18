@@ -5,3 +5,23 @@ event_notification_to_all:
 event_notification_limited:
     pattern: /limited
     defaults: { _controller: "AdminBundle:Events:eventNotificationLimited" }
+    
+add_subject_table:
+    pattern: /subjects/{class}/{division}/add
+    defaults: { _controller: "AdminBundle:Subjects:redirectSubjectsLink" }
+    
+add_subjects_to_master:
+    pattern: /subjects/add/name
+    defaults: { _controller: "AdminBundle:Subjects:addNewSubjectToMaster" }
+    
+subjects_list_master_table:
+    pattern: /subjects/{classId}/{dividionId}/list/master-table
+    defaults: { _controller: "AdminBundle:Subjects:subjectsListMasterTable" }
+    
+subjects_list_link_table:
+    pattern: /subjects/{classId}/{dividionId}/list/link-table
+    defaults: { _controller: "AdminBundle:Subjects:subjectsListLinkTable" }
+    
+link_from_master_to_class:
+    pattern: /subjects/{classId}/{dividionId}/link
+    defaults: { _controller: "AdminBundle:Subjects:linkFromMasterToClass" }

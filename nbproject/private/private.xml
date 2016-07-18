@@ -4,6 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/var/www/html/pwc/students/src/AdminBundle/Controller/StudentsController.php</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Entity/SubjectClassLink.php</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/config/masters.yml</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/config/events.yml</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/MainAdmin/Students/manageAddStudents.html.twig</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/MainAdmin/Subjects/subjectsManage.html.twig</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/MainAdmin/index.html.twig</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Entity/Subjects.php</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Controller/SubjectsController.php</file>
+            <file>file:/var/www/html/pwc/students/src/AdminBundle/Resources/views/MainAdmin/Subjects/linkSubjectsToClass.html.twig</file>
         </group>
     </open-files>
 </project-private>

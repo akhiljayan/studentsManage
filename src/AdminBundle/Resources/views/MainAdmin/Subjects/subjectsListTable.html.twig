@@ -3,7 +3,11 @@
         <thead class=" bg-light-blue-gradient">
             <tr>
                 <th>#</th>
-                <th>Subjects</th>
+                {%if actionFlag == 'leftTable'%}
+                <th>Master Subjects</th>
+                {%else%}
+                <th>Subjects added</th>
+                {%endif%}
                 <th>Action</th>
             </tr>
         </thead>
@@ -18,7 +22,6 @@
                         </td>
                     {%else%}
                         <td style="text-align:center">
-                            {#<a href="javascript:void(0)" class="remove-link" data-id="{{subject.id}}"><i class="fa fa-times"></i></a>#}
                             <a href="{{path('remove_subject_class_link',{'classId':class,'dividionId':division,'subjectId':subject.id})}}"><i class="fa fa-times"></i></a>
                         </td>
                     {%endif%}

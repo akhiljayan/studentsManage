@@ -169,4 +169,13 @@ class SubjectsController extends Controller {
         return new JsonResponse(true);
     }
 
+    public function removeSubjectClassLinkAction($classId, $dividionId, $subjectId) {
+        $em = $this->getDoctrine()->getManager();
+        $link = $em->getRepository("AdminBundle:SubjectClassLink")->findOneBy(array('classId' => $classId, 'divisionId' => $dividionId, 'subjectId' => $subjectId));
+        $em->remove($link);
+        $em->flush();
+        return $this->redirect($this->generateUrl('add_subject_table', array('class' => $classId, 'division' => $dividionId)));
+//        return new JsonResponse(true);
+    }
+
 }

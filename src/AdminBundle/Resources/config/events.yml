@@ -25,3 +25,7 @@ subjects_list_link_table:
 link_from_master_to_class:
     pattern: /subjects/{classId}/{dividionId}/link
     defaults: { _controller: "AdminBundle:Subjects:linkFromMasterToClass" }
+    
+remove_subject_class_link:
+    pattern: /subjects/{classId}/remove/{dividionId}/{subjectId}/remove/link
+    defaults: { _controller: "AdminBundle:Subjects:removeSubjectClassLink" }

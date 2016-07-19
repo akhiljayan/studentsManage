@@ -162,7 +162,7 @@
                 <ul class="sidebar-menu">
                     <a href="{{path('_index')}}"><li class="header">MAIN NAVIGATION</li></a>
                             {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
-                                {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision'%}
+                                {%if flag == 'indexMasters' or flag == 'manageStudents' or flag == 'manageClass' or flag == 'manageDivision' or flag == 'manageSubjects'%}
                             <li class="active treeview">
                                 <a href="{{path('_index')}}">
                                     <i class="fa fa-dashboard"></i> <span>Masters</span> <i class="fa fa-angle-left pull-right"></i>
@@ -172,18 +172,27 @@
                                         <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
                                         <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
                                         <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        <li><a href="{{path('masters_add_subjects')}}"><i class="fa fa-circle-o"></i> Manage Subjects</a></li>
                                         {%elseif flag == 'manageStudents'%}
                                         <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
                                         <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
                                         <li class="active"><a href="javascript:void(0)"><i class="fa fa-circle-o text-red"></i> Add Students</a></li>
+                                        <li><a href="{{path('masters_add_subjects')}}"><i class="fa fa-circle-o"></i> Manage Subjects</a></li>
                                         {%elseif flag == 'manageClass'%}
                                         <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Class</a></li>
                                         <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
                                         <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
-                                        {%else%}
+                                        <li><a href="{{path('masters_add_subjects')}}"><i class="fa fa-circle-o"></i> Manage Subjects</a></li>
+                                        {%elseif flag == 'manageDivision'%}
                                         <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
                                         <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Division</a></li>
                                         <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        <li><a href="{{path('masters_add_subjects')}}"><i class="fa fa-circle-o"></i> Manage Subjects</a></li>
+                                        {%else%}
+                                        <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
+                                        <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
+                                        <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                        <li class="active"><a href="javascript:void(0)"  style="color:black"><i class="fa fa-circle-o text-red"></i> Manage Subjects</a></li>
                                         {%endif%}
                                 </ul>
                             </li>
@@ -196,6 +205,7 @@
                                     <li><a href="{{path('masters_manage_class')}}"><i class="fa fa-circle-o"></i> Manage Class</a></li>
                                     <li><a href="{{path('masters_manage_division')}}"><i class="fa fa-circle-o"></i> Manage Division</a></li>
                                     <li><a href="{{path('masters_add_students')}}"><i class="fa fa-circle-o"></i> Add Students</a></li>
+                                    <li><a href="{{path('masters_add_subjects')}}"><i class="fa fa-circle-o"></i> Manage Subjects</a></li>
                                 </ul>
                             </li>
                         {%endif%}

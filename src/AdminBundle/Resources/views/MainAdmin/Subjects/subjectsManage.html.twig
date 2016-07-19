@@ -1,5 +1,5 @@
 {% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
-{% set flag = 'manageStudents' %}
+{% set flag = 'manageSubjects' %}
 {% block mainPannelStyle %}
     {{ parent() }}
     <style type="text/css">
@@ -86,28 +86,6 @@
                     yearRange: "-100:+0"
                 });
             });
-
-            {#$("form").submit(function (e) {
-                e.preventDefault();
-                var path = "{{path('add_subject_table')}}";
-                var classRoom = $("#{{form.class.vars.id}}").val();
-                var division = $("#{{form.division.vars.id}}").val();
-                $.ajax({
-                    type: "POST",
-                    url: path,
-                    data: {'class': classRoom, 'division': division},
-                    context: this,
-                    beforeSend: function () {
-                        $(this).after(imgLoading);
-                    },
-                    success: function ($data) {
-                    },
-                    complete: function () {
-                        $(this).next(".loading-img").remove();
-                    }
-                });
-            });#}
-
         });
     </script>
 {% endblock %}

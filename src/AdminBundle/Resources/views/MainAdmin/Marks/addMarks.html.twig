@@ -1,0 +1,174 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'manageMarks' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            {{class.classNum}}-{{division.division}}
+            <small>Add subjects</small>
+            <a class="btn btn-default" href="{{path('students_marks_manage')}}"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Go back</a>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Masters</a></li>
+            <li class="active">Add Subject</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="panel panel-primary" style="margin: 0 15px 15px 15px;">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Link subjects to class
+                    </div>
+                </div>
+                <div class="panel-body">
+                    {%if students|length > 0%}
+                        <table class="table table-bordered table-striped table-condensed CaptionSmall" style="width:89%; margin-left: auto;margin-right: auto;">
+                            <thead class=" bg-light-blue-gradient">
+                                <tr>
+                                    <th style="width:90px">Roll Number</th>
+                                    <th>Student</th>
+                                    <th>Marks(out of 100)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                    <tr id="{{student.guId}}">
+                                        <td>{{loop.index}}</td>
+                                        <td>{{ student.studentsName }}</td>
+                                        <td style="text-align:center">
+                                            <table class="table table-bordered table-striped table-condensed CaptionSmall">
+                                                <tbody>
+                                                    {%for subject in subjects%}
+                                                        <tr>
+                                                            <td>{{subject.subjectId.subjectName}}:</td>
+                                                            <td><input type="text" ></td>
+                                                        </tr>
+                                                    {%endfor%}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {%else%}
+                        <h4 class="alert alert-info">No records found!!!</h4>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+        <div class="row"  style="padding-right:15px; max-height: 1000px; overflow-y:auto" id="list-class-table">
+            {#Table put here#}
+        </div>
+    </section>
+
+    <div class="modal fade" id="add-class-room-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="csv-upload-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content-upload">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var classId = "{{class.id}}";
+            var divisionId = "{{division.id}}";
+            $("#subject-name").val("");
+            $(".no-form-control").removeClass("form-control");
+            $("body").delegate(".dob", "focusin", function () {
+                $(this).datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showButtonPanel: true,
+                    yearRange: "-100:+0"
+                });
+            });
+
+            $("#submit-subject").click(function () {
+                var subject = $("#subject-name").val();
+                var path = "{{path('add_subjects_to_master')}}";
+                var reloadPath = "{{path('subjects_list_master_table',{'classId':'__classId__','dividionId':'__divisionId__'})}}";
+                reloadPath = reloadPath.replace('__classId__', classId);
+                reloadPath = reloadPath.replace('__divisionId__', divisionId);
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: {'subject': subject},
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        if ($data) {
+                            $("#subjects-list-table").load(reloadPath);
+                        } else {
+                            alert('Subject Already added');
+                        }
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+
+            $("#link-subject-to-class").click(function () {
+                var subjectsId = new Array();
+                $('.master-sub-checkbox:checked').each(function () {
+                    subjectsId.push($(this).val());
+                });
+                var path = "{{path('link_from_master_to_class',{'classId':'__classId__','dividionId':'__divisionId__'})}}";
+                path = path.replace('__classId__', classId);
+                path = path.replace('__divisionId__', divisionId);
+                var reloadPathLeft = "{{path('subjects_list_master_table',{'classId':'__classId__','dividionId':'__divisionId__'})}}";
+                reloadPathLeft = reloadPathLeft.replace('__classId__', classId);
+                reloadPathLeft = reloadPathLeft.replace('__divisionId__', divisionId);
+                var reloadPathRight = "{{path('subjects_list_link_table',{'classId':'__classId__','dividionId':'__divisionId__'})}}";
+                reloadPathRight = reloadPathRight.replace('__classId__', classId);
+                reloadPathRight = reloadPathRight.replace('__divisionId__', divisionId);
+                $.ajax({
+                    type: "POST",
+                    url: path,
+                    data: {'subjects': subjectsId},
+                    context: this,
+                    beforeSend: function () {
+                        $(this).after(imgLoading);
+                    },
+                    success: function ($data) {
+                        if ($data) {
+                            $("#subjects-list-table").load(reloadPathLeft);
+                            $("#subjects-link-table").load(reloadPathRight);
+                        } else {
+                            alert('Some error occured');
+                        }
+                    },
+                    complete: function () {
+                        $(this).next(".loading-img").remove();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

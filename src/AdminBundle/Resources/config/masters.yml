@@ -53,4 +53,8 @@ add_new_user_form:
 masters_add_subjects:
     pattern: /subjects
     defaults: { _controller: "AdminBundle:Subjects:manageSubjects" }
+    
+students_marks_manage:
+    pattern: /marks
+    defaults: { _controller: "AdminBundle:Marks:manageMarks" }
 

@@ -175,7 +175,6 @@ class SubjectsController extends Controller {
         $em->remove($link);
         $em->flush();
         return $this->redirect($this->generateUrl('add_subject_table', array('class' => $classId, 'division' => $dividionId)));
-//        return new JsonResponse(true);
     }
 
 }

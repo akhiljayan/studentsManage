@@ -1,0 +1,92 @@
+{% extends 'AdminBundle:DefaultMaster:masterPannel.html.twig'%}
+{% set flag = 'manageMarks' %}
+{% block mainPannelStyle %}
+    {{ parent() }}
+    <style type="text/css">
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid #cbcbcb !important;
+        }
+    </style>
+{% endblock %}
+
+{% block mainPannelContent %} 
+    <section class="content-header">
+        <h1>
+            Manage Marks
+            <small>Add Marks of students</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Marks</a></li>
+            <li class="active">Select Class</li>
+        </ol>
+    </section>
+    {{ form_start(form,{'attr':{'id':'add-class-subject'} }) }}
+    <section class="content">
+        <div class="row">
+            <div class="panel panel-primary" style="margin: 0 15px 15px 15px;">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            {{form_label(form.class)}}
+                            {{form_widget(form.class)}}
+                        </div>
+                        <div class="col-md-3">
+                            {{form_label(form.division)}}
+                            {{form_widget(form.division)}}
+                        </div>
+                        <div class='col-md-3'></div>
+                        <div class='col-md-3' style="padding-top: 25px;">
+                            {{form_row(form.save)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row"  style="padding-right:15px; max-height: 1000px; overflow-y:auto" id="list-class-table">
+            {#Table put here#}
+        </div>
+        <div class="row">
+            <div class="pull-right hide" id="master-reset" style="padding-right:15px">
+                <span class="btn btn-danger form-control" id="reset-all">Reset</span>
+            </div>
+            <div class="pull-right hide" id="master-save" style="padding-right:15px">
+                {{form_row(form.save)}}
+            </div>
+        </div>
+    </section>
+    {{ form_end(form) }}
+
+    <div class="modal fade" id="add-class-room-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content">
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="csv-upload-modal" area-hidden="true" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="modal-content-upload">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block mainPannelJs %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").delegate(".dob", "focusin", function () {
+                $(this).datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    changeMonth: true,
+                    changeYear: true,
+                    showButtonPanel: true,
+                    yearRange: "-100:+0"
+                });
+            });
+        });
+    </script>
+{% endblock %}
+

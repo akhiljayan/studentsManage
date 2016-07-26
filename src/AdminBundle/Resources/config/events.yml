@@ -29,3 +29,7 @@ link_from_master_to_class:
 remove_subject_class_link:
     pattern: /subjects/{classId}/remove/{dividionId}/{subjectId}/remove/link
     defaults: { _controller: "AdminBundle:Subjects:removeSubjectClassLink" }
+    
+add_marks_to_class:
+    pattern: /marks/{class}/add/{division}
+    defaults: { _controller: "AdminBundle:Marks:addMarks" }

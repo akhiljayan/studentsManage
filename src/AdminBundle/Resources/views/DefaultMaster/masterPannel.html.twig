@@ -214,11 +214,11 @@
 
                     {%if flag == 'listStudents'%}
                         <li class="active">
-                            <a href="{{path('list_students_details')}}"><i class="fa fa-book"></i> <span>Student Details</span></a>
+                            <a href="{{path('list_students_details')}}"><i class="fa fa-bell"></i> <span>Student Details</span></a>
                         </li>
                     {%else%}
                         <li>
-                            <a href="{{path('list_students_details')}}"><i class="fa fa-book"></i> <span>Student Details</span></a>
+                            <a href="{{path('list_students_details')}}"><i class="fa fa-bell"></i> <span>Student Details</span></a>
                         </li>
                     {%endif%}
 
@@ -232,6 +232,18 @@
                             <a href="{{path('students_attendence_manage')}}"><i class="fa fa-files-o"></i> <span>Attendence</span></a>
                         </li>
                     {%endif%}
+                    
+                    
+                    {%if flag == 'manageMarks'%}
+                        <li class="active">
+                            <a href="{{path('students_marks_manage')}}"><i class="fa fa-book"></i> <span>Accademic Marks</span></a>
+                        </li>
+                    {%else%}
+                        <li>
+                            <a href="{{path('students_marks_manage')}}"><i class="fa fa-book"></i> <span>Accademic Marks</span></a>
+                        </li>
+                    {%endif%}
+                    
 
                     {% if is_granted('ROLE_SM_SUPERUSER') or is_granted('ROLE_SM_ADMIN') %}
                         {%if flag == 'userManagement'%}
